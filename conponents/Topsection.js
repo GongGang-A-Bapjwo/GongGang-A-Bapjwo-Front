@@ -1,20 +1,26 @@
 import { styles } from '../styles';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const Topsection = () => {
+    const navigation = useNavigation(); // navigation 훅 가져오기
+
     return (
         <View style={[styles.table, { marginTop: 25 }]}>
             <View style={styles.row}>
                 <View style={styles.topcellleft}>
-                    <Image source={require('../assets/images/calendar.png')} style={{ width: 24, height: 24 }} />
+                    <TouchableOpacity onPress={() => navigation.navigate('Timetable')}>
+                        <Image source={require('../assets/images/calendar.png')} style={{ width: 24, height: 24 }} />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.topcellmiddle}>
                     <Text style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold' }}>공강아밥줘</Text>
                 </View>
                 <View style={styles.topcellright}>
-
-                    <Image source={require('../assets/images/settings.png')} style={{ width: 24, height: 24 }} />
+                    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                        <Image source={require('../assets/images/settings.png')} style={{ width: 24, height: 24 }} />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
