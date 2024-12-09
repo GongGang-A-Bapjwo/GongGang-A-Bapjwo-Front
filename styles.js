@@ -29,6 +29,17 @@ export const styles = StyleSheet.create({
         height: 45,
         borderRadius: 12,
     },
+    row3: {
+        flexDirection: 'row',
+        justifyContent: 'left', // 가로 정렬
+        alignItems: 'center',    // 세로 정렬
+        height: 20,
+        borderRadius: 12,
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+    },
     freebox: {
         width: 160,
         height: 110,
@@ -155,6 +166,31 @@ export const styles = StyleSheet.create({
         marginLeft: 16,
         marginTop: 5,
         color: '#9C8F4A'
+    },
+    circleIcon: {
+        width: 45,
+        height: 45,
+        borderRadius: 50,
+        justifyContent: 'center',
+        backgroundColor: '#E8E3CF',
+    },
+    membernumIcon: {
+        width: 50,
+        height: 20,
+        borderRadius: 12,
+        backgroundColor: '#E7E7E5',
+        textAlign: 'center',
+
+    },
+    makeparty: {
+        width: 330,
+        height: 40,
+        backgroundColor: '#E8E3CF',
+        borderRadius: 12,
+        justifyContent: 'center',
+    },
+    codeinput: {
+        width: 290, height: 50, backgroundColor: "#F7F5F2", borderColor: "#E3DBCF", borderWidth: 1, marginTop: 40, borderRadius: 12
     },
 });
 
