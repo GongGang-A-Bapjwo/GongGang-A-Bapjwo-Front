@@ -192,5 +192,23 @@ export const styles = StyleSheet.create({
     codeinput: {
         width: 290, height: 50, backgroundColor: "#F7F5F2", borderColor: "#E3DBCF", borderWidth: 1, marginTop: 40, borderRadius: 12
     },
+    customToast: {
+        zIndex: 1000,
+        backgroundColor: "#FCFAF7",
+        height: 120,
+        borderRadius: 12,
+        padding: 15,
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 10,
+        marginHorizontal: 10,
+    },
+    toastTitle: {
+
+    },
+    toastMessage: {
+
+    },
 });
 

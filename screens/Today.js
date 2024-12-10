@@ -5,6 +5,7 @@ import PromiseBoard from '../conponents/PromiseBoard';
 import ToggleSwitch from '../conponents/ToggleSwitch';
 
 const Today = () => {
+    // console.log("Today");
     return (
         <>
             <FreeTimeNotice />

@@ -4,6 +4,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 const Topsection = () => {
+    // console.log('Topsection');
     const navigation = useNavigation(); // navigation 훅 가져오기
 
     return (

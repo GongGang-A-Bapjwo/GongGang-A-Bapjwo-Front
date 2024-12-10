@@ -38,7 +38,7 @@ const Topselection = () => {
                     ))}
                 </View>
             </View>
-        //선택된 인덱스를 판단해서 아래에 해당하는 페이지 라우팅
+            {/* 선택된 인덱스를 판단해서 아래에 해당하는 페이지 라우팅 */}
             {selectedIndex === 0 ? <Today /> : <Join />}
         </>
     );

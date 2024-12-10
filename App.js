@@ -10,6 +10,7 @@ import Timetable from './screens/Timetable';
 import Topsection from './conponents/Topsection';
 import Settings from './screens/Settings';
 import Join from './screens/Join';
+import Manage from './screens/Manage';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Manage" component={Manage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,11 +3,10 @@ import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { GestureHandlerRootView, ScrollView, Switch } from 'react-native-gesture-handler';
 import { styles } from '../styles';
-import Topsection from '../conponents/Topsection';
 import Topselection from '../conponents/Topselection';
-import Today from './Today';
 
 const MainFrame = () => {
+    // console.log("MainFrame");
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={[styles.container]}>
