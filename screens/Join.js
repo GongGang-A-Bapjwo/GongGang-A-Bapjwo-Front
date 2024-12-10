@@ -3,12 +3,12 @@ import { View, Text, Image, TouchableOpacity, Alert, Modal } from 'react-native'
 import { styles } from '../styles';
 import { ScrollView, TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useScrollToTop } from '@react-navigation/native';
 
-const Join = () => {
+const Join = ({ onGoToManage }) => {
     const [text, setText] = useState('');
     const inputRef = useRef(null);
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
 
     var group = [['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'], ['밥약', '같이 밥 먹을 사람 구해요', '12:00 - 1:00 (월)', '1/3', '일반유저']];
 
@@ -33,6 +33,14 @@ const Join = () => {
 
         } else {
             //Alert.alert('입장코드 확인', 입장코드 ${text}로 입장하시겠습니까?)
+            // if (scrollViewRef.current) {
+            //     console.log("scroll check");
+            //     scrollViewRef.current.scrollTo({
+            //         y: 0, // 최상단
+            //         animated: true,
+            //     });
+            // }
+
             EnterToast();
             console.log("toast message check");
         }
@@ -79,7 +87,7 @@ const Join = () => {
                         <View style={[styles.promiseboardcontent, { height: 100, marginTop: 10 }]} key={cindex}>
                             <View style={[styles.row3, { marginBottom: 5, marginLeft: 16 }]}>
                                 <Text>{content[0]}</Text>
-                                {content[4] === '관리자' ? <TouchableOpacity onPress={() => navigation.navigate('Manage')}>
+                                {content[4] === '관리자' ? <TouchableOpacity onPress={() => onGoToManage()}>
                                     <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30 }]}>
                                         <Image source={require('../assets/images/manager.png')} style={{ width: 24, height: 24, marginLeft: 10 }} />
                                     </View>

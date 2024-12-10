@@ -204,11 +204,13 @@ export const styles = StyleSheet.create({
         elevation: 10,
         marginHorizontal: 10,
     },
-    toastTitle: {
-
+    partyview: {
+        fontSize: 24,
+        height: 100,
     },
-    toastMessage: {
-
+    match: {
+        width: 330, height: 60, alignItems: 'flex-start', textAlign: 'center', fontSize: 20, fontWeight: 'bold',
     },
+
 });
 

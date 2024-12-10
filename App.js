@@ -27,7 +27,7 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Manage" component={Manage} />
+        {/* <Stack.Screen name="Manage" component={Manage} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

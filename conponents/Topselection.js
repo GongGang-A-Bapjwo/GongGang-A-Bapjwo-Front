@@ -1,17 +1,46 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from '../styles';
-import { useNavigation } from '@react-navigation/native';
 import Today from '../screens/Today';
 import Join from '../screens/Join';
+import Manage from '../screens/Manage';
+import Matching from '../screens/Matching';
+import EditAppt from '../screens/EditAppt';
 
 const Topselection = () => {
-    const [selectedIndex, setSelectedIndex] = useState(0); // 선택된 버튼의 인덱스 상태
+    const [currentPage, setCurrentPage] = useState('Today');
+    const [managePage, setManagePage] = useState(null);
 
     const toggleOptions = [
         { label: 'Today', value: 'Today' },
         { label: 'Join', value: 'Join' },
     ];
+
+    const renderPage = () => {
+        if (currentPage === 'Today') return <Today />;
+        if (currentPage === 'Join') return <Join onGoToManage={() => { setCurrentPage('Manage'); setManagePage(null); }} />;
+
+        // Manage 상태일 때, managePage 상태를 확인하여 다른 컴포넌트를 조건부 렌더링
+        if (currentPage === 'Manage') {
+            if (managePage === 'Matching') {
+                return <Matching onBack={() => setManagePage('Join')} />;
+            } else if (managePage === 'EditAppt') {
+                return <EditAppt onBack={() => setManagePage(null)} />;
+            } else {
+                // 기본 Manage 화면: 여기서 두 개의 버튼 중 하나를 누르면 managePage를 변경
+                return <Manage
+                    onSelectOption1={() => setManagePage('Matching')}
+                    onSelectOption2={() => setManagePage('EditAppt')}
+                />;
+            }
+        }
+        return null;
+    };
+
+    // currentPage에 따라 현재 선택된 인덱스 구하기
+    const selectedIndex = currentPage === 'Manage'
+        ? 1 // Manage일 때도 Join과 같은 인덱스를 선택한 상태로 표시
+        : toggleOptions.findIndex(option => option.value === currentPage);
 
     return (
         <>
@@ -20,16 +49,16 @@ const Topselection = () => {
                     {toggleOptions.map((option, index) => (
                         <TouchableOpacity
                             key={index}
-                            onPress={() => { setSelectedIndex(index) }} // 선택된 버튼의 인덱스 저장
+                            onPress={() => { setCurrentPage(option.value); setManagePage(null); }}
                             style={[
                                 styles.togglecell,
-                                selectedIndex === index && styles.toggleselectedcell, // 선택된 버튼 스타일 적용
+                                selectedIndex === index && styles.toggleselectedcell,
                             ]}
                         >
                             <Text
                                 style={[
                                     styles.togglecellText,
-                                    selectedIndex === index && styles.toggleselectedcellText, // 선택된 텍스트 스타일 적용
+                                    selectedIndex === index && styles.toggleselectedcellText,
                                 ]}
                             >
                                 {option.label}
@@ -38,8 +67,7 @@ const Topselection = () => {
                     ))}
                 </View>
             </View>
-            {/* 선택된 인덱스를 판단해서 아래에 해당하는 페이지 라우팅 */}
-            {selectedIndex === 0 ? <Today /> : <Join />}
+            {renderPage()}
         </>
     );
 };
