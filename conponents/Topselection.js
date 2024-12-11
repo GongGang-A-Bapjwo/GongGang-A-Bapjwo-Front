@@ -6,6 +6,7 @@ import Join from '../screens/Join';
 import Manage from '../screens/Manage';
 import Matching from '../screens/Matching';
 import EditAppt from '../screens/EditAppt';
+import MakeParty from '../screens/MakeParty';
 
 const Topselection = () => {
     const [currentPage, setCurrentPage] = useState('Today');
@@ -17,28 +18,37 @@ const Topselection = () => {
     ];
 
     const renderPage = () => {
-        if (currentPage === 'Today') return <Today />;
-        if (currentPage === 'Join') return <Join onGoToManage={() => { setCurrentPage('Manage'); setManagePage(null); }} />;
-
-        // Manage 상태일 때, managePage 상태를 확인하여 다른 컴포넌트를 조건부 렌더링
-        if (currentPage === 'Manage') {
-            if (managePage === 'Matching') {
-                return <Matching onBack={() => setManagePage('Join')} />;
-            } else if (managePage === 'EditAppt') {
-                return <EditAppt onBack={() => setManagePage(null)} />;
-            } else {
-                // 기본 Manage 화면: 여기서 두 개의 버튼 중 하나를 누르면 managePage를 변경
-                return <Manage
-                    onSelectOption1={() => setManagePage('Matching')}
-                    onSelectOption2={() => setManagePage('EditAppt')}
-                />;
-            }
+        switch (currentPage) {
+            case 'Today':
+                return <Today />;
+            case 'Join':
+                return (
+                    <Join
+                        onSelectManage={() => setCurrentPage('Manage')}
+                        onSelectMakeParty={() => setCurrentPage('MakeParty')}
+                    />
+                );
+            case 'Manage':
+                if (managePage) {
+                    const BackComponent = managePage === 'Matching' ? Matching : EditAppt;
+                    return <BackComponent onBack={() => setManagePage(null)} />;
+                }
+                return (
+                    <Manage
+                        onSelectOption1={() => setManagePage('Matching')}
+                        onSelectOption2={() => setManagePage('EditAppt')}
+                    />
+                );
+            case 'MakeParty':
+                return <MakeParty />;
+            default:
+                return <Text>Page not found</Text>; // 기본 페이지 또는 오류 메시지 표시
         }
-        return null;
     };
 
+
     // currentPage에 따라 현재 선택된 인덱스 구하기
-    const selectedIndex = currentPage === 'Manage'
+    const selectedIndex = (currentPage === 'Manage' || currentPage === 'MakeParty')
         ? 1 // Manage일 때도 Join과 같은 인덱스를 선택한 상태로 표시
         : toggleOptions.findIndex(option => option.value === currentPage);
 

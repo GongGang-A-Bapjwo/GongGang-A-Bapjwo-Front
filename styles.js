@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FCFAF7',
-        alignItems: 'center',
         justifyContent: 'flex-start', // 세로 스크롤을 위한 정렬
         width: '100%', // 가로로 넘치지 않도록 제한
     },
@@ -31,7 +30,7 @@ export const styles = StyleSheet.create({
     },
     row3: {
         flexDirection: 'row',
-        justifyContent: 'left', // 가로 정렬
+        justifyContent: 'flex-start', // 가로 정렬
         alignItems: 'center',    // 세로 정렬
         height: 20,
         borderRadius: 12,
@@ -145,7 +144,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
     },
     promiseboardcontent: {
-        width: 330,
+        width: '90%',
         height: 80,
         marginTop: 30,
         borderRadius: 12,
@@ -211,6 +210,12 @@ export const styles = StyleSheet.create({
     match: {
         width: 330, height: 60, alignItems: 'flex-start', textAlign: 'center', fontSize: 20, fontWeight: 'bold',
     },
+    okbutton: {
+        marginTop: 300, backgroundColor: '#D8D3B9', width: 120, height: 35, justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',    // 세로 정렬
+        borderRadius: 12,
+    }
 
 });
 

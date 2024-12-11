@@ -5,12 +5,16 @@ import { ScrollView, TextInput, TouchableWithoutFeedback } from 'react-native-ge
 import Toast from 'react-native-toast-message';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 
-const Join = ({ onGoToManage }) => {
+const Join = ({ onSelectManage, onSelectMakeParty }) => {
     const [text, setText] = useState('');
     const inputRef = useRef(null);
     // const navigation = useNavigation();
 
-    var group = [['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'], ['밥약', '같이 밥 먹을 사람 구해요', '12:00 - 1:00 (월)', '1/3', '일반유저']];
+    var group = [['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
+    ['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
+    ['밥약', '같이 밥 먹을 사람 구해요', '12:00 - 1:00 (월)', '1/3', '일반유저'],
+    ['밥약', '같이 밥 먹을 사람 구해요', '12:00 - 1:00 (월)', '1/3', '일반유저']
+    ];
 
     const handleFocus = () => {
         if (inputRef.current) {
@@ -72,8 +76,8 @@ const Join = ({ onGoToManage }) => {
 
 
     return (
-        <ScrollView>
-            <View style={[styles.container, { height: 900 }]}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}>
+            <View style={[styles.container, { height: 600 }]}>
                 <View style={styles.table}>
                     <View>
                         <View style={[styles.row3, { height: 30, justifyContent: 'center', marginTop: 20, marginBottom: 0 }]}>
@@ -87,7 +91,7 @@ const Join = ({ onGoToManage }) => {
                         <View style={[styles.promiseboardcontent, { height: 100, marginTop: 10 }]} key={cindex}>
                             <View style={[styles.row3, { marginBottom: 5, marginLeft: 16 }]}>
                                 <Text>{content[0]}</Text>
-                                {content[4] === '관리자' ? <TouchableOpacity onPress={() => onGoToManage()}>
+                                {content[4] === '관리자' ? <TouchableOpacity onPress={() => onSelectManage()}>
                                     <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30 }]}>
                                         <Image source={require('../assets/images/manager.png')} style={{ width: 24, height: 24, marginLeft: 10 }} />
                                     </View>
@@ -112,7 +116,7 @@ const Join = ({ onGoToManage }) => {
                         </View>
                     ))}
                     <View style={[styles.row3]}>
-                        <TouchableOpacity onPress={() => alert('공강팟 만들기')}>
+                        <TouchableOpacity onPress={() => onSelectMakeParty()}>
                             <View style={[styles.makeparty, { marginTop: 50 }]}>
                                 <Text style={{ textAlign: 'center', fontSize: 25, fontWeight: 'medium' }}>+</Text>
                             </View>

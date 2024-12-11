@@ -4,15 +4,10 @@ import { styles } from '../styles';
 import HorizontalScroll from '../conponents/HorizontalScroll';
 import { TextInput } from 'react-native-gesture-handler';
 
-const EditAppt = () => {
-    var rawdata = ['스터디/동아리', '학습공동체입니다', '2', '4']
-    //나중에 카테고리도 받아와서 넣기(topselection 연동 필요)
-
-    const [category, setCategory] = useState('전체');
-    const [partycontent, setPartycontent] = useState(rawdata[1]);
-    const [memNum1, setMemNum1] = useState(rawdata[2]);
-    const [memNum2, setMemNum2] = useState(rawdata[3]);
-
+const MakeParty = () => {
+    const [partycontent, setPartycontent] = useState('');
+    const [memNum1, setMemNum1] = useState(1);
+    const [memNum2, setMemNum2] = useState(1);
 
     const handleTextChange1 = (text) => {
         // memNum1 상태 업데이트
@@ -43,14 +38,11 @@ const EditAppt = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <View >
-                <ScrollView contentContainerStyle={{
-                    flexGrow: 1, paddingBottom: 20, height: 520
-
-                }}>
-                    <View style={[styles.container]}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}>
+                    <View style={[styles.container, { height: 520 }]}>
                         <View style={styles.table}>
-                            <View style={[styles.row3, { marginTop: 20 }]}>
-                                <Text style={[styles.title, { height: 30 }]}>공강팟 설정 변경</Text>
+                            <View style={[styles.row3, { marginTop: 30 }]}>
+                                <Text style={[styles.title, { height: 40 }]}>공강팟 만들기</Text>
                             </View>
                             <View style={[styles.row3, { marginTop: 210 }]}>
                                 <View style={[styles.promiseboardcontent, { height: 430 }]}>
@@ -90,7 +82,7 @@ const EditAppt = () => {
                                                 height: 50,
                                                 flex: 1,
                                                 paddingLeft: 25,
-                                                marginTop: 270,
+                                                marginTop: 280,
                                             }}
                                         >
                                             <View
@@ -160,7 +152,7 @@ const EditAppt = () => {
                                     </View>
 
                                     <View style={[styles.row3, { marginTop: 180 }]}>
-                                        <TouchableOpacity onPress={() => alert('수정')} style={[styles.okbutton, { marginTop: 20, flix: 1, marginLeft: 100, backgroundColor: '#eee' }]}>
+                                        <TouchableOpacity onPress={() => alert('수정')} style={[styles.okbutton, { marginTop: 0, flix: 1, marginLeft: 100, backgroundColor: '#eee' }]}>
                                             <View style={[styles.okbutton, { marginTop: 0 }]}>
                                                 <Text style={{ fontSize: 16, fontWeight: 'bold' }}>선택하기</Text>
                                             </View>
@@ -177,4 +169,4 @@ const EditAppt = () => {
     )
 }
 
-export default EditAppt;
+export default MakeParty;

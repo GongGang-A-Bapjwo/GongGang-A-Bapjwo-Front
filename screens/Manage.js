@@ -5,8 +5,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const Manage = ({ onSelectOption1, onSelectOption2 }) => {
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.container}>
+        <ScrollView contentContainerStyle={[styles.container]}>
+            <View style={[styles.container]} >
                 <View style={[styles.table, { marginTop: 30 }]}>
                     <View style={[styles.row3, { marginBottom: 30, height: 30, textAlign: 'Top' }]}>
                         <Text style={[styles.title]}>공팟장 옵션</Text>
@@ -56,7 +56,7 @@ const Manage = ({ onSelectOption1, onSelectOption2 }) => {
                     </View>
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 }
 
