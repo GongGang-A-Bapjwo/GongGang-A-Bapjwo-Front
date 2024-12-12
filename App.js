@@ -11,25 +11,28 @@ import Topsection from './conponents/Topsection';
 import Settings from './screens/Settings';
 import Join from './screens/Join';
 import Manage from './screens/Manage';
-
+import { Provider } from 'react-redux';
+import store from './redux/store';
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="MainFrame" component={MainFrame} options={{ header: () => <Topsection /> }} />
-        <Stack.Screen
-          name="Timetable"
-          component={Timetable}
-          options={{
-            title: '시간표'
-          }}
-        />
-        <Stack.Screen name="Settings" component={Settings} />
-        {/* <Stack.Screen name="Manage" component={Manage} /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="MainFrame" component={MainFrame} options={{ header: () => <Topsection /> }} />
+          <Stack.Screen
+            name="Timetable"
+            component={Timetable}
+            options={{
+              title: '시간표'
+            }}
+          />
+          <Stack.Screen name="Settings" component={Settings} />
+          {/* <Stack.Screen name="Manage" component={Manage} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -1,14 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Alert, Modal } from 'react-native';
 import { styles } from '../styles';
 import { ScrollView, TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setScrollY } from '../redux/actions/scrollActions';
+import Animated from 'react-native-reanimated';
 
 const Join = ({ onSelectManage, onSelectMakeParty }) => {
     const [text, setText] = useState('');
+    const [isInputFocused, setIsInputFocused] = useState(false);
     const inputRef = useRef(null);
+    const scrollViewRef = useRef(null);
     // const navigation = useNavigation();
+
+    const scrollY = useSelector((state) => state.scroll.scrollY);
 
     var group = [['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
     ['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
@@ -16,10 +23,39 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
     ['밥약', '같이 밥 먹을 사람 구해요', '12:00 - 1:00 (월)', '1/3', '일반유저']
     ];
 
+    const handleScroll = (event) => {
+        const currentY = useSelector((state) => state.scroll.scrollY);;
+        dispatch(setScrollY(currentY));
+        console.log('Current scrollY:', scrollY);
+    };
+
+    useEffect(() => {
+        // 컴포넌트가 렌더링될 때 ScrollView를 제일 아래로 스크롤
+        setTimeout(() => {
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 100); // 약간의 지연 추가
+    }, []);
+
     const handleFocus = () => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
+        setIsInputFocused(true);
+        console.log('Current scrollY:', scrollY);
+
+        setTimeout(() => {
+            if (scrollViewRef.current) {
+                scrollViewRef.current.scrollTo({
+                    y: scrollY + 60,
+                    animated: true,
+                });
+            }
+        }, 50); // 레이아웃 완료를 기다리기 위해 50ms 지연
+    };
+
+
+    const handleBlur = () => {
+        setIsInputFocused(false);
     };
 
     const handleSubmit = () => {
@@ -75,9 +111,19 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
     }
 
 
+
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}>
-            <View style={[styles.container, { height: 600 }]}>
+        <ScrollView ref={scrollViewRef}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}>
+
+            <View style={[styles.container, styles.container,
+            {
+                height: isInputFocused
+                    ? 600 + group.length * 130
+                    : 600 + group.length * 70,
+            },]}>
                 <View style={styles.table}>
                     <View>
                         <View style={[styles.row3, { height: 30, justifyContent: 'center', marginTop: 20, marginBottom: 0 }]}>
@@ -149,7 +195,8 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                                 <Text style={{ fontSize: 16 }}>입장 코드를 입력해주세요</Text>
                             </View>
                             <View style={[styles.row3, { marginLeft: 16, marginTop: 20, marginBottom: 10 }]}>
-                                <TextInput style={styles.codeinput} ref={inputRef} placeholder="ex. 1F3W3C" value={text} onChangeText={setText} />
+                                <TextInput style={styles.codeinput} ref={inputRef} placeholder="ex. 1F3W3C" value={text} onChangeText={setText} onFocus={handleFocus}
+                                    onBlur={handleBlur} />
                             </View>
                             <TouchableOpacity onPress={handleSubmit}>
                                 <View style={[styles.row3, { marginTop: 60 }]}>

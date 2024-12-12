@@ -4,14 +4,16 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { GestureHandlerRootView, ScrollView, Switch } from 'react-native-gesture-handler';
 import { styles } from '../styles';
 import Topselection from '../conponents/Topselection';
+import { useDispatch } from 'react-redux';
+import { setScrollY } from '../redux/actions/scrollActions';
 
 const MainFrame = () => {
     const scrollViewRef = useRef(null);
-    const [scrollY, setScrollY] = useState(0); // 스크롤 위치 상태
+    const dispatch = useDispatch();
 
     const handleScroll = (event) => {
         const currentY = event.nativeEvent.contentOffset.y;
-        setScrollY(currentY);
+        dispatch(setScrollY(currentY));
     };
 
     // console.log("MainFrame");
