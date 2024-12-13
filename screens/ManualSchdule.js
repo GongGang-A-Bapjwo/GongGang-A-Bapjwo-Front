@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, PanResponder } from "react-native";
-import { styles } from '../styles';
 
-const ChangeTimetable = () => {
+const ManualSchedule = () => {
     const tableHead = ["시간", "월", "화", "수", "목", "금"];
     const tableData = [
         ['9', '', '', '', '', ''],
@@ -140,7 +139,7 @@ const ChangeTimetable = () => {
     return (
         <View
             {...panResponder.panHandlers}
-            style={{ flex: 1, padding: 16, backgroundColor: "#f0f0f0" }}
+            style={{ flex: 1, padding: 16, backgroundColor: "#FCFAF7" }}
         >
             <View style={{ flexDirection: "row", height: 40 }}>
                 {tableHead.map((head, index) => (
@@ -213,26 +212,9 @@ const ChangeTimetable = () => {
                     })}
                 </View>
             ))}
-            <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('ChangeTimetable')}
-                    style={{
-                        backgroundColor: '#C3B87A',
-                        flex: 1,
-                        width: '105%',
-                        position: 'absolute',
-                        top: 20,
-                        left: -10,
-                        height: 50,
-                        borderRadius: 24,
-                    }}
-                >                    <View>
-                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>수정 완료</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+
         </View>
     );
 };
 
-export default ChangeTimetable;
+export default ManualSchedule;

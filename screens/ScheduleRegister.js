@@ -19,16 +19,16 @@ const ScheduleRegister = () => {
                     <Text style={[styles.title, { fontSize: 16 }]}>아래의 절차를 따라 시간표를 등록해주세요</Text>
                 </View>
                 <View style={{ position: 'absolute', top: 270 }}>
-                    <View style={[styles.row3, { flex: 1 }]}>
-                        <Text style={{ textAlign: 'center' }}>에브리타임을 사용하신다면</Text>
+                    <View style={[styles.row3, { flex: 1, justifyContent: 'center' }]}>
+                        <Text style={{ textAlign: 'center', fontSize: 15 }}>에브리타임을 사용하신다면</Text>
                     </View>
                     <View style={[styles.row3]}>
-                        <Text>아래 버튼을 눌러 에브리타임 시간표를 등록할 수 있어요</Text>
+                        <Text style={{ fontSize: 15 }}>아래 버튼을 눌러 에브리타임 시간표를 등록할 수 있어요</Text>
                     </View>
                 </View>
                 <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('UploadPhoto')}
+                        onPress={() => navigation.navigate('ViewTimetable')}
                         style={{
                             backgroundColor: '#C3B87A',
                             flex: 1,
@@ -44,7 +44,7 @@ const ScheduleRegister = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ position: 'absolute', top: 440 }}>
-                    <View style={[styles.row3]}>
+                    <View style={[styles.row3, { justifyContent: 'center' }]}>
                         <Text>에브리타임을 사용하지 않는다면</Text>
                     </View>
                     <View style={[styles.row3]}>
@@ -53,6 +53,7 @@ const ScheduleRegister = () => {
                 </View>
                 <View style={[styles.row3, { width: '95%', position: 'relative', left: 10, top: 150 }]}>
                     <TouchableOpacity
+                        onPress={() => navigation.navigate('ManualSchedule')}
                         style={{
                             backgroundColor: '#C3B87A',
                             flex: 1,
@@ -63,7 +64,7 @@ const ScheduleRegister = () => {
                             borderRadius: 24,
                         }}
                     >                    <View>
-                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 자동등록</Text>
+                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 수동 등록</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
