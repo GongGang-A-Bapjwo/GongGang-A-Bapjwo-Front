@@ -3,6 +3,7 @@
     "name": "gongangababjwo",
     "slug": "gongangababjwo",
     "version": "1.0.0",
+    "scheme": "gongangababjwo",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
@@ -30,7 +31,8 @@
         {
           "hashAssetFiles": true
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }

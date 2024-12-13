@@ -11,6 +11,7 @@ import Animated from 'react-native-reanimated';
 const Join = ({ onSelectManage, onSelectMakeParty }) => {
     const [text, setText] = useState('');
     const [isInputFocused, setIsInputFocused] = useState(false);
+    const [ToastFocus, setToastFocus] = useState(false);
     const inputRef = useRef(null);
     const scrollViewRef = useRef(null);
     // const navigation = useNavigation();
