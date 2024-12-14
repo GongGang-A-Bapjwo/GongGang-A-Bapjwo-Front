@@ -5,14 +5,71 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
 import axios from 'axios';
 import { client_id } from '@env';
+import { redirectUrl } from '@env';
+import { user_login_api } from '@env';
 import { useNavigation } from '@react-navigation/native';
 
 const KakaogLogin = () => {
     const navigation = useNavigation();
 
-    // 일단 로그인 부분 skip - 조금만 수정하면 될듯
+    const CLIENT_ID = client_id; // 카카오 REST API 키
+    const REDIRECT_URI = redirectUrl;
+    // 카카오 로그인 URL 생성
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+    const handleLogin = async () => {
+        try {
+            const result = await WebBrowser.openAuthSessionAsync(KAKAO_AUTH_URL, REDIRECT_URI);
+            console.log('redirecturl:', result);
+            if (result.type === 'success' && result.url) {
+                const url = new URL(result.url); // 리다이렉트된 URL
+                const code = url.searchParams.get('code'); // Authorization Code 추출
+                if (code) {
+                    console.log('Authorization Code:', code);
+                    await sendAuthorizationCode(code);
+                } else {
+                    Alert.alert('Error', 'Authorization code not found');
+                }
+            } else if (result.type === 'cancel') {
+                Alert.alert('Error', 'Login process was cancelled');
+            } else {
+                Alert.alert('Error', 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login Error:', error.message);
+            Alert.alert('Error', 'Login failed');
+        } finally {
+            WebBrowser.dismissBrowser(); // 세션 종료
+        }
+    };
+
+
+
+    // API로 authorizationCode 전송
+    const sendAuthorizationCode = async (authorizationCode) => {
+        console.log('Sending Authorization Code:', authorizationCode); // 호출 여부 확인
+
+        const API_URL = user_login_api;
+        const data = { socialType: 'KAKAO' };
+
+        try {
+            const response = await axios.post(`${API_URL}?authorizationCode=${authorizationCode}`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('API Response:', response.data);
+            Alert.alert('Success', 'Login successful');
+        } catch (error) {
+            console.error('API Error:', error.response?.data || error.message);
+            Alert.alert('Error', 'Failed to process authorization code');
+        }
+    };
+
+
+
     // const CLIENT_ID = client_id; // 카카오 앱 REST API 키
-    // const REDIRECT_URI = 'http://192.168.45.47:3000/process-token'; // 중간 서버의 엔드포인트
+    // const REDIRECT_URI = 'http://129.154.55.198:80/api/free-time/process-image';
 
     // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
@@ -43,6 +100,8 @@ const KakaogLogin = () => {
     //             });
 
     //             const { access_token, refresh_token } = tokenResponse.data;
+    //             console.log('액세스 토큰:', access_token);
+    //             console.log('리프레시 토큰:', refresh_token);
 
     //             // 중간 서버로 토큰 전송
     //             const serverResponse = await axios.post(REDIRECT_URI, {
@@ -52,6 +111,7 @@ const KakaogLogin = () => {
 
     //             console.log('서버 응답:', serverResponse.data);
     //             Alert.alert('로그인 성공', '카카오 로그인이 완료되었습니다.');
+    //             navigation.navigate('ScheduleRegister');
     //         } else {
     //             console.error('로그인 실패:', result);
     //             Alert.alert('로그인 실패', '카카오 로그인이 취소되었습니다.');
@@ -61,6 +121,7 @@ const KakaogLogin = () => {
     //         Alert.alert('로그인 실패', '문제가 발생했습니다. 다시 시도해주세요.');
     //     }
     // };
+
 
     return (
         <GestureHandlerRootView>
@@ -85,7 +146,7 @@ const KakaogLogin = () => {
                 </View>
                 <View style={[styles.row3, { width: '95%' }]}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('ScheduleRegister')}
+                        onPress={() => { handleLogin() }}
                         style={{
                             backgroundColor: '#FAE300',
                             flex: 1,
