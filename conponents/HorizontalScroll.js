@@ -17,7 +17,7 @@ const HorizontalScroll = () => {
     const categories = ['전체', '스터디/동아리', '밥약', '상담', '기타'];
 
     return (
-        <View style={styles.row}>
+        <View style={[styles.row, { position: 'relative', top: -90 }]}>
             <ScrollView
                 horizontal={true}
                 style={[styles.scrollview, { marginLeft: 20, marginTop: 0 }]}

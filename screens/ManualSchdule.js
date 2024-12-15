@@ -119,9 +119,9 @@ const ManualSchedule = () => {
         });
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         const weekdays = ["", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
-        const selectedJson = [];
+        const freeTimeRequestItems = [];
 
         for (let colIndex = 1; colIndex < tableHead.length; colIndex++) {
             const selectedRows = [];
@@ -133,28 +133,35 @@ const ManualSchedule = () => {
             }
 
             if (selectedRows.length > 0) {
-                selectedJson.push({
+                freeTimeRequestItems.push({
                     weekday: weekdays[colIndex],
-                    startTime: `${selectedRows[0]}:00`,
-                    endTime: `${selectedRows[selectedRows.length - 1]}:00`,
+                    startTime: `${selectedRows[0]}:00`, // :00 추가
+                    endTime: `${selectedRows[selectedRows.length - 1]}:00`, // :00 추가
                 });
             }
         }
 
-        console.log("Generated JSON:", selectedJson);
-        // Alert.alert("등록 완료", JSON.stringify(selectedJson, null, 2));
-        const response = axios.post('http://129.154.55.198:80/api/free-time',
-            selectedJson, // 본문 데이터
-            {
-                headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt"
-                }
-            }
-        );
-        console.log("Response:", response.data);
-        Alert.alert("등록 완료", "서버에 성공적으로 전송되었습니다!");
-    };
+        console.log("Generated JSON:", { freeTimeRequestItems });
 
+        try {
+            const response = await axios.post(
+                'http://129.154.55.198:80/api/free-time',
+                {
+                    freeTimeRequestItems // "freeTimeRequestItems" 키로 데이터를 전송
+                },
+                {
+                    headers: {
+                        "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt",
+                    },
+                }
+            );
+            console.log("Response:", response.data);
+            navigation.navigate('MainFrame');
+
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message);
+        }
+    };
     return (
         <View
             {...panResponder.panHandlers}
