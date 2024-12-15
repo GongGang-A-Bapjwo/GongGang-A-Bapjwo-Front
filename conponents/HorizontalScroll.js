@@ -14,7 +14,7 @@ const HorizontalScroll = () => {
         }));
     };
 
-    const categories = ['전체', '스터디/동아리', '밥약', '상담', '기타'];
+    const categories = ['전체', '스터디', '밥약', '상담', '기타'];
 
     return (
         <View style={[styles.row, { position: 'relative', top: -90 }]}>
