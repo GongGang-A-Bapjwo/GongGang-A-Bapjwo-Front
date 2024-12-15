@@ -12,10 +12,10 @@ import { useNavigation } from '@react-navigation/native';
 const KakaogLogin = () => {
     const navigation = useNavigation();
 
-    const CLIENT_ID = client_id; // 카카오 REST API 키
-    const REDIRECT_URI = redirectUrl;
+    const CLIENT_ID = 'f2e25f4e863b53bd8f26299a1d14136d'; // 카카오 REST API 키
+    const REDIRECT_URI = 'http://auth.expo.io/@ksy2384/gonganababjwo';
     // 카카오 로그인 URL 생성
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
 
     const handleLogin = async () => {
         try {
@@ -24,20 +24,21 @@ const KakaogLogin = () => {
             if (result.type === 'success' && result.url) {
                 const url = new URL(result.url); // 리다이렉트된 URL
                 const code = url.searchParams.get('code'); // Authorization Code 추출
+                console.log('code:', code);
                 if (code) {
                     console.log('Authorization Code:', code);
                     await sendAuthorizationCode(code);
                 } else {
-                    Alert.alert('Error', 'Authorization code not found');
+                    console.log('Error', 'Authorization code not found');
                 }
             } else if (result.type === 'cancel') {
-                Alert.alert('Error', 'Login process was cancelled');
+                console.log('Error', 'Login process was cancelled');
             } else {
-                Alert.alert('Error', 'Login failed');
+                console.log('Error', 'Login failed');
             }
         } catch (error) {
             console.error('Login Error:', error.message);
-            Alert.alert('Error', 'Login failed');
+            console.log('Error', 'Login failed');
         } finally {
             WebBrowser.dismissBrowser(); // 세션 종료
         }
@@ -59,10 +60,11 @@ const KakaogLogin = () => {
                 },
             });
             console.log('API Response:', response.data);
-            Alert.alert('Success', 'Login successful');
+            console.log('Success', 'Login successful');
+
         } catch (error) {
             console.error('API Error:', error.response?.data || error.message);
-            Alert.alert('Error', 'Failed to process authorization code');
+            console.log('Error', 'Failed to process authorization code');
         }
     };
 
@@ -110,15 +112,15 @@ const KakaogLogin = () => {
     //             });
 
     //             console.log('서버 응답:', serverResponse.data);
-    //             Alert.alert('로그인 성공', '카카오 로그인이 완료되었습니다.');
+    //             console.log('로그인 성공', '카카오 로그인이 완료되었습니다.');
     //             navigation.navigate('ScheduleRegister');
     //         } else {
     //             console.error('로그인 실패:', result);
-    //             Alert.alert('로그인 실패', '카카오 로그인이 취소되었습니다.');
+    //             console.log('로그인 실패', '카카오 로그인이 취소되었습니다.');
     //         }
     //     } catch (error) {
     //         console.error('로그인 실패:', error.message);
-    //         Alert.alert('로그인 실패', '문제가 발생했습니다. 다시 시도해주세요.');
+    //         console.log('로그인 실패', '문제가 발생했습니다. 다시 시도해주세요.');
     //     }
     // };
 
@@ -138,11 +140,11 @@ const KakaogLogin = () => {
                         </Text>
                     </View>
                     <View style={[styles.row3]}>
-                        <Image source={require('../assets/images/logoImg.png')} style={{ width: 310, height: 330, position: 'relative', top: 25 }} />
+                        <Image source={require('../assets/images/gonggang1.png')} style={{ width: 310, height: 330, position: 'relative', top: 25 }} />
                     </View>
                 </View>
                 <View style={[styles.row3]}>
-                    <Text style={[styles.title, { fontSize: 17, position: 'relative', top: 25, left: 20 }]}>간편하게 로그인하고 서비스를 이용해보세요</Text>
+                    <Text style={[styles.title, { fontSize: 17, position: 'relative', top: 30, left: 20, height: 22 }]}>간편하게 로그인하고 서비스를 이용해보세요</Text>
                 </View>
                 <View style={[styles.row3, { width: '95%' }]}>
                     <TouchableOpacity
@@ -152,12 +154,12 @@ const KakaogLogin = () => {
                             flex: 1,
                             width: '90%',
                             position: 'relative',
-                            top: 60,
+                            top: 70,
                             height: 50,
                             borderRadius: 24,
                         }}
                     >
-                        <Image source={require('../assets/images/kakaotalk_sharing_btn_small.png')} style={{ width: 30, height: 30, position: 'relative', top: 10, left: 10 }} />
+                        <Image source={require('../assets/images/kakaotalksharingbtnsmall.png')} style={{ width: 30, height: 30, position: 'relative', top: 10, left: 10 }} />
                         <View>
                             <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: -15 }}>카카오 로그인</Text>
                         </View>

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, PanResponder } from "react-native";
-
+import { styles } from '../styles';
+import { useNavigation } from "@react-navigation/native";
 const ManualSchedule = () => {
+    const navigation = useNavigation();
     const tableHead = ["시간", "월", "화", "수", "목", "금"];
     const tableData = [
         ['9', '', '', '', '', ''],
@@ -212,7 +214,24 @@ const ManualSchedule = () => {
                     })}
                 </View>
             ))}
-
+            <View style={[styles.row3, { marginTop: 0, position: 'relative', top: 40 }]}>
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate('MainFrame') }}
+                    style={{
+                        backgroundColor: '#C3B87A',
+                        flex: 1,
+                        width: '100%',
+                        position: 'relative',
+                        top: 10,
+                        height: 50,
+                        borderRadius: 24,
+                    }}
+                >
+                    <View>
+                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', color: '#FFFFFF', position: 'relative', top: 15 }}>등록 완료</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };

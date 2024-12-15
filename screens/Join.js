@@ -5,7 +5,7 @@ import { ScrollView, TextInput, TouchableWithoutFeedback } from 'react-native-ge
 import Toast from 'react-native-toast-message';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setScrollY } from '../redux/actions/scrollActions';
+// import { setScrollY } from '../redux/actions/scrollActions';
 import Animated from 'react-native-reanimated';
 
 const Join = ({ onSelectManage, onSelectMakeParty }) => {
@@ -16,7 +16,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
     const scrollViewRef = useRef(null);
     // const navigation = useNavigation();
 
-    const scrollY = useSelector((state) => state.scroll.scrollY);
+    // const scrollY = useSelector((state) => state.scroll.scrollY);
 
     var group = [['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
     ['스터디/동아리', '스터디 할 사람을 구합니다', '미정', '1/3', '관리자'],
@@ -25,9 +25,9 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
     ];
 
     const handleScroll = (event) => {
-        const currentY = useSelector((state) => state.scroll.scrollY);;
-        dispatch(setScrollY(currentY));
-        console.log('Current scrollY:', scrollY);
+        // const currentY = useSelector((state) => state.scroll.scrollY);;
+        // dispatch(setScrollY(currentY));
+        // console.log('Current scrollY:', scrollY);
     };
 
     useEffect(() => {

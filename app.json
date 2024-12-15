@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "gongangababjwo",
-    "slug": "gongangababjwo",
+    "name": "gonggangababjwo",
+    "slug": "gonggangababjwo",
     "owner": "ksy2384",
     "version": "1.0.0",
-    "scheme": "gongangababjwo",
+    "scheme": "gonggangababjwo",
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "light",
@@ -16,13 +16,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gongangababjwo"
+      "bundleIdentifier": "com.gonggangababjwo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gonggangababjwo",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/icons/favicon.png"
@@ -34,7 +37,19 @@
           "hashAssetFiles": true
         }
       ],
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-build-properties"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6ab19bc0-fe5c-4f5c-9876-7b8d107afcd2"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6ab19bc0-fe5c-4f5c-9876-7b8d107afcd2"
+    }
   }
 }

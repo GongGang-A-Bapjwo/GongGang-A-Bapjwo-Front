@@ -5,15 +5,15 @@ import { GestureHandlerRootView, ScrollView, Switch } from 'react-native-gesture
 import { styles } from '../styles';
 import Topselection from '../conponents/Topselection';
 import { useDispatch } from 'react-redux';
-import { setScrollY } from '../redux/actions/scrollActions';
+// import { setScrollY } from '../redux/actions/scrollActions';
 
 const MainFrame = () => {
-    const scrollViewRef = useRef(null);
-    const dispatch = useDispatch();
+    // const scrollViewRef = useRef(null);
+    // const dispatch = useDispatch();
 
     const handleScroll = (event) => {
         const currentY = event.nativeEvent.contentOffset.y;
-        dispatch(setScrollY(currentY));
+        // dispatch(setScrollY(currentY));
     };
 
     // console.log("MainFrame");

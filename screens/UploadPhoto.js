@@ -101,7 +101,7 @@ const UploadPhoto = () => {
                     </View>
                     <View style={[styles.row3, { marginTop: 0, position: 'relative', top: 40 }]}>
                         <TouchableOpacity
-                            onPress={() => { navigation.navigate('ChangeTimetable') }}
+                            onPress={() => { navigation.navigate('ViewTimetable') }}
                             style={{
                                 backgroundColor: '#C3B87A',
                                 flex: 1,

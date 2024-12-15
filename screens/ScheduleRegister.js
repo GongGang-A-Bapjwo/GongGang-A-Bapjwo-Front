@@ -28,7 +28,7 @@ const ScheduleRegister = () => {
                 </View>
                 <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('ViewTimetable')}
+                        onPress={() => navigation.navigate('UploadPhoto')}
                         style={{
                             backgroundColor: '#C3B87A',
                             flex: 1,
