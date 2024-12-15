@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 const UploadPhoto = () => {
     const navigation = useNavigation();
     const [image, setImage] = useState(null);
-    const [base64, setBase64] = useState(null);
+    const [file, setFile] = useState(null);
 
     const pickImage = async () => {
         try {
@@ -29,8 +29,15 @@ const UploadPhoto = () => {
             });
 
             if (!result.canceled && result.assets?.[0]?.uri) {
-                setImage(result.assets[0].uri); // 이미지 URI 설정
-                setBase64(result.assets[0].base64); // Base64 데이터 저장
+                const selectedImageUri = result.assets[0].uri;
+                setImage(selectedImageUri); // 이미지 URI 설정
+
+                const fileData = {
+                    uri: selectedImageUri,
+                    name: selectedImageUri.split('/').pop(), // 파일 이름 추출
+                    type: 'image/jpeg', // 기본 MIME 타입 설정
+                };
+                setFile(fileData);
             } else {
                 console.log('이미지 선택이 취소되었습니다.');
             }
@@ -41,18 +48,29 @@ const UploadPhoto = () => {
     };
 
     const uploadImage = async () => {
-        if (!base64) {
-            alert('먼저 이미지를 선택하세요.');
+        if (!file) {
+            alert('이미지를 선택해주세요.');
             return;
         }
 
         try {
-            const response = await axios.post('http://129.154.55.198:80/api/free-time/process-image', {
-                file: base64, // Base64로 인코딩된 이미지 데이터
-            });
+            const formData = new FormData();
+            formData.append('file', file); // 파일 추가
+
+            const response = await axios.post(
+                'http://129.154.55.198:80/api/free-time/process-image',
+                formData,
+                {
+                    headers: {
+                        "Authorization": "Bearer KVyODXJIwOfHvgV_Z1O_OGfn1nJz3L0Fz6hL5wKmO9A_Je4AFck0PQAAAAQKPCSZAAABk8qQ1CXMISgqRbFCUQ",
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
             console.log('업로드 성공:', response.data);
             alert('사진 업로드 성공!');
+            navigation.navigate('ViewTimetable');
         } catch (error) {
             console.error('업로드 실패:', error);
             alert('사진 업로드 중 오류가 발생했습니다.');
@@ -101,7 +119,7 @@ const UploadPhoto = () => {
                     </View>
                     <View style={[styles.row3, { marginTop: 0, position: 'relative', top: 40 }]}>
                         <TouchableOpacity
-                            onPress={() => { navigation.navigate('ViewTimetable') }}
+                            onPress={() => { uploadImage() }}
                             style={{
                                 backgroundColor: '#C3B87A',
                                 flex: 1,

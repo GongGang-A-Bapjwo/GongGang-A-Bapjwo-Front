@@ -32,6 +32,7 @@ const ChangeTimetable = () => {
     const tempSelection = useRef(new Set()); // 스와이프 중 임시로 저장된 셀
     const startCoords = useRef({ x: 0, y: 0 });
     const endCoords = useRef({ x: 0, y: 0 });
+    const [selectedcell, setSelectedcell] = useState(false);
 
     const panResponder = useRef(
         PanResponder.create({
@@ -102,6 +103,8 @@ const ChangeTimetable = () => {
 
                     if (isOverlapping) {
                         tempSelection.current.add(cellKey); // 임시 저장
+                        //setSelectedcell(true); <- 선택된 rowindex와 colindex를 저장하기
+                        //setSelectedcell([...SelectRes, rowIndex, colIndex]);
                     }
                 }
             }
@@ -131,7 +134,7 @@ const ChangeTimetable = () => {
                     updatedRes.push([rowIndex, colIndex]);
                 }
             });
-
+            console.log(updatedRes);
             setSelectRes(updatedRes); // 선택 리스트 업데이트
             return updatedState;
         });

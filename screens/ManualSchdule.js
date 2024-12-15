@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
-import { View, Text, TouchableOpacity, PanResponder } from "react-native";
+import { View, Text, TouchableOpacity, PanResponder, Alert } from "react-native";
 import { styles } from '../styles';
 import { useNavigation } from "@react-navigation/native";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import axios from "axios";
 const ManualSchedule = () => {
     const navigation = useNavigation();
     const tableHead = ["시간", "월", "화", "수", "목", "금"];
@@ -21,7 +23,6 @@ const ManualSchedule = () => {
         ['21', '', '', '', '', ''],
     ];
 
-    const [SelectRes, setSelectRes] = useState([]); // 선택된 셀 상태
     const [selectedCells, setSelectedCells] = useState(
         Array.from({ length: tableData.length }, () =>
             Array.from({ length: tableHead.length }, () => false)
@@ -30,7 +31,7 @@ const ManualSchedule = () => {
 
     const flexArr = [1.3, 2, 2, 2, 2, 2];
     const cellCoordinates = useRef({});
-    const tempSelection = useRef(new Set()); // 스와이프 중 임시로 저장된 셀
+    const tempSelection = useRef(new Set());
     const startCoords = useRef({ x: 0, y: 0 });
     const endCoords = useRef({ x: 0, y: 0 });
 
@@ -43,28 +44,24 @@ const ManualSchedule = () => {
                     x: gestureState.x0,
                     y: gestureState.y0,
                 };
-                tempSelection.current.clear(); // 스와이프 시작 시 초기화
+                tempSelection.current.clear();
             },
             onPanResponderMove: (evt, gestureState) => {
                 endCoords.current = {
                     x: gestureState.moveX,
                     y: gestureState.moveY,
                 };
-                console.log(startCoords.current, endCoords.current);
-                trackSelection(); // 드래그 중 선택된 셀 추적
+                trackSelection();
             },
             onPanResponderRelease: () => {
-                applySelection(); // 드래그 완료 후 상태 업데이트
+                applySelection();
             },
         })
     ).current;
 
     const handleLayout = (rowIndex, colIndex, layout) => {
         const { x, width, height } = layout;
-
-        // y 좌표를 행 인덱스를 기반으로 계산
         const y = 140 + (35 * rowIndex);
-
         cellCoordinates.current[`${rowIndex}-${colIndex}`] = {
             x,
             y,
@@ -89,7 +86,6 @@ const ManualSchedule = () => {
 
                 if (cellInfo) {
                     const { x, y, width, height } = cellInfo;
-
                     const cellXMin = x;
                     const cellXMax = x + width;
                     const cellYMin = y;
@@ -102,7 +98,7 @@ const ManualSchedule = () => {
                         yMax >= cellYMin;
 
                     if (isOverlapping) {
-                        tempSelection.current.add(cellKey); // 임시 저장
+                        tempSelection.current.add(cellKey);
                     }
                 }
             }
@@ -112,30 +108,51 @@ const ManualSchedule = () => {
     const applySelection = () => {
         setSelectedCells(prevState => {
             const updatedState = prevState.map(row => [...row]);
-            const updatedRes = [...SelectRes];
 
             tempSelection.current.forEach(cellKey => {
                 const [rowIndex, colIndex] = cellKey.split("-").map(Number);
 
-                if (updatedState[rowIndex][colIndex]) {
-                    // 선택 해제
-                    updatedState[rowIndex][colIndex] = false;
-                    const index = updatedRes.findIndex(
-                        ([row, col]) => row === rowIndex && col === colIndex
-                    );
-                    if (index !== -1) {
-                        updatedRes.splice(index, 1); // 리스트에서 제거
-                    }
-                } else {
-                    // 선택
-                    updatedState[rowIndex][colIndex] = true;
-                    updatedRes.push([rowIndex, colIndex]);
-                }
+                updatedState[rowIndex][colIndex] = !updatedState[rowIndex][colIndex];
             });
 
-            setSelectRes(updatedRes); // 선택 리스트 업데이트
             return updatedState;
         });
+    };
+
+    const handleRegister = () => {
+        const weekdays = ["", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
+        const selectedJson = [];
+
+        for (let colIndex = 1; colIndex < tableHead.length; colIndex++) {
+            const selectedRows = [];
+
+            for (let rowIndex = 0; rowIndex < tableData.length; rowIndex++) {
+                if (selectedCells[rowIndex][colIndex]) {
+                    selectedRows.push(rowIndex + 9); // 시간은 9시부터 시작
+                }
+            }
+
+            if (selectedRows.length > 0) {
+                selectedJson.push({
+                    weekday: weekdays[colIndex],
+                    startTime: `${selectedRows[0]}:00`,
+                    endTime: `${selectedRows[selectedRows.length - 1]}:00`,
+                });
+            }
+        }
+
+        console.log("Generated JSON:", selectedJson);
+        // Alert.alert("등록 완료", JSON.stringify(selectedJson, null, 2));
+        const response = axios.post('http://129.154.55.198:80/api/free-time',
+            selectedJson, // 본문 데이터
+            {
+                headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt"
+                }
+            }
+        );
+        console.log("Response:", response.data);
+        Alert.alert("등록 완료", "서버에 성공적으로 전송되었습니다!");
     };
 
     return (
@@ -216,7 +233,7 @@ const ManualSchedule = () => {
             ))}
             <View style={[styles.row3, { marginTop: 0, position: 'relative', top: 40 }]}>
                 <TouchableOpacity
-                    onPress={() => { navigation.navigate('MainFrame') }}
+                    onPress={() => { handleRegister() }}
                     style={{
                         backgroundColor: '#C3B87A',
                         flex: 1,
