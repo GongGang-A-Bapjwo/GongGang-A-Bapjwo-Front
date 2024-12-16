@@ -5,7 +5,7 @@ import { styles } from '../styles';
 const Settings = () => {
     return (
         <View style={styles.container}>
-            <View style={[styles.table, { width: 340, height: 200, borderWidth: 1, borderColor: '#E8E3CF', borderRadius: 12, marginTop: 16 }]}>
+            <View style={[styles.table, { width: 340, height: 200, borderWidth: 1, borderColor: '#E8E3CF', borderRadius: 12, marginTop: 16, position: 'relative', left: 30, top: 20 }]}>
                 <View style={[styles.row2, { marginTop: 0 }]}>
                     <Text style={{ fontSize: 22, fontWeight: 'bold', marginRight: 200 }}>시간표 변경</Text>
                 </View>

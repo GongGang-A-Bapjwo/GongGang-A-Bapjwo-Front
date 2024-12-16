@@ -1,141 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
-import { View, Text, TouchableOpacity, PanResponder, TouchableWithoutFeedback } from "react-native";
-import { styles } from '../styles';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { styles } from "../styles";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
-const ViewTimetable = () => {
-    // const navigation = useNavigation();
-    // const data = route.params;
-    // console.log(data);
-    // const [Selectrowstart, setSelectrowstart] = useState([]); // 시작 행 인덱스
-    // const [Selectrowend, setSelectrowend] = useState([]); // 종료 행 인덱스
-    // const [selectedcol, setSelectedcol] = useState([]); // 선택된 열 인덱스
-    // const [selectedCells, setSelectedCells] = useState(
-    //     Array.from({ length: 13 }, () => Array(6).fill(false)) // 13행 x 6열 초기화
-    // );
-    const tableHead = ["시간", "월", "화", "수", "목", "금"];
-    const tableData = [
-        ['9', '', '', '', '', ''],
-        ['10', '', '', '', '', ''],
-        ['11', '', '', '', '', ''],
-        ['12', '', '', '', '', ''],
-        ['13', '', '', '', '', ''],
-        ['14', '', '', '', '', ''],
-        ['15', '', '', '', '', ''],
-        ['16', '', '', '', '', ''],
-        ['17', '', '', '', '', ''],
-        ['18', '', '', '', '', ''],
-        ['19', '', '', '', '', ''],
-        ['20', '', '', '', '', ''],
-        ['21', '', '', '', '', ''],
-    ];
-
-    // const weekdayMap = {
-    //     MONDAY: 1,
-    //     TUESDAY: 2,
-    //     WEDNESDAY: 3,
-    //     THURSDAY: 4,
-    //     FRIDAY: 5,
-    // };
-
-    // const TimeMap = {
-    //     '9': 1,
-    //     '10': 2,
-    //     '11': 3,
-    //     '12': 4,
-    //     '13': 5,
-    //     '14': 6,
-    //     '15': 7,
-    //     '16': 8,
-    //     '17': 9,
-    //     '18': 10,
-    //     '19': 11,
-    //     '20': 12,
-    //     '21': 13,
-    // };
-
-
-    // useEffect(() => {
-    //     // data가 배열인지 확인
-    //     if (!Array.isArray(data)) {
-    //         console.error("data는 배열이 아닙니다.");
-    //         return;
-    //     }
-
-    //     // 상태 초기화
-    //     const newSelectedcol = [];
-    //     const newSelectrowstart = [];
-    //     const newSelectrowend = [];
-
-    //     // 데이터 처리
-    //     data.forEach(({ weekday, startTime, endTime }) => {
-    //         if (weekday in weekdayMap) {
-    //             newSelectedcol.push(weekdayMap[weekday]);
-    //         }
-    //         if (startTime in TimeMap) {
-    //             newSelectrowstart.push(TimeMap[startTime]);
-    //         }
-    //         if (endTime in TimeMap) {
-    //             newSelectrowend.push(TimeMap[endTime]);
-    //         }
-    //     });
-
-    //     // 상태 업데이트
-    //     setSelectedcol(newSelectedcol);
-    //     setSelectrowstart(newSelectrowstart);
-    //     setSelectrowend(newSelectrowend);
-    // }, [data]);
-
-    // // selectedCells 업데이트
-    // useEffect(() => {
-    //     if (Selectrowstart.length && Selectrowend.length && selectedcol.length) {
-    //         const updatedCells = selectedCells.map((row, rowIndex) =>
-    //             row.map((cell, colIndex) => {
-    //                 for (let i = 0; i < Selectrowstart.length; i++) {
-    //                     const start = Selectrowstart[i];
-    //                     const end = Selectrowend[i];
-    //                     const col = selectedcol[i];
-
-    //                     if (rowIndex >= start && rowIndex < end && colIndex === col) {
-    //                         return true;
-    //                     }
-    //                 }
-    //                 return cell;
-    //             })
-    //         );
-
-    //         setSelectedCells(updatedCells);
-    //     }
-    // }, [Selectrowstart, Selectrowend, selectedcol]);
-
-
-    // const [SelectRes, setSelectRes] = useState([]); // 선택된 셀 상태
-
-    const response = axios.post(
-        'http://129.154.55.198:80/api/free-time/info',
-        {
-            headers: {
-                "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODYzOTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.-67Mwm60X8dXrTMUcu2U049FJgPsOjf57LK0fVLoaedYf79iMAbRWCtCKrcFfmUc",
-            },
-        }
-    );
-    console.log(response.data);
-
-
+const ViewTimetable = ({ route }) => {
     const navigation = useNavigation();
+    const rawData = route.params || {}; // 전달받은 데이터를 object로 초기화
+    console.log("Raw Data:", rawData);
 
-    // 전달된 데이터 확인 및 배열 변환
-    const data = response.data || [];
-    console.log("Is data an array?", Array.isArray(data));
-    console.log("Data:", data);
+    const data = Array.isArray(rawData.data) ? rawData.data : []; // 올바른 데이터만 처리
+    console.log("Parsed Data:", data);
 
-    const [Selectrowstart, setSelectrowstart] = useState([]); // 시작 행 인덱스
-    const [Selectrowend, setSelectrowend] = useState([]); // 종료 행 인덱스
-    const [selectedcol, setSelectedcol] = useState([]); // 선택된 열 인덱스
-    const [selectedCells, setSelectedCells] = useState(
-        Array.from({ length: 13 }, () => Array(6).fill(false)) // 13행 x 6열 초기화
-    );
+    const tableHead = ["시간", "월", "화", "수", "목", "금"];
+    const tableData = Array.from({ length: 13 }, (_, i) => [`${9 + i}`, "", "", "", "", ""]);
 
     const weekdayMap = {
         MONDAY: 1,
@@ -145,84 +22,72 @@ const ViewTimetable = () => {
         FRIDAY: 5,
     };
 
-    const TimeMap = {
-        '9': 1,
-        '10': 2,
-        '11': 3,
-        '12': 4,
-        '13': 5,
-        '14': 6,
-        '15': 7,
-        '16': 8,
-        '17': 9,
-        '18': 10,
-        '19': 11,
-        '20': 12,
-        '21': 13,
+    const timeMap = {
+        "09:00": 0,
+        "10:00": 1,
+        "11:00": 2,
+        "12:00": 3,
+        "13:00": 4,
+        "14:00": 5,
+        "15:00": 6,
+        "16:00": 7,
+        "17:00": 8,
+        "18:00": 9,
+        "19:00": 10,
+        "20:00": 11,
+        "21:00": 12,
     };
 
-    useEffect(() => {
-        if (!Array.isArray(data)) {
-            console.error("Data is not an array.");
-            return;
-        }
-
-        const newSelectedcol = [];
-        const newSelectrowstart = [];
-        const newSelectrowend = [];
-
-        data.forEach(({ weekday, startTime, endTime }) => {
-            if (weekday in weekdayMap) {
-                newSelectedcol.push(weekdayMap[weekday]);
-            }
-            if (startTime in TimeMap) {
-                newSelectrowstart.push(TimeMap[startTime]);
-            }
-            if (endTime in TimeMap) {
-                newSelectrowend.push(TimeMap[endTime]);
-            }
-        });
-
-        setSelectedcol(newSelectedcol);
-        setSelectrowstart(newSelectrowstart);
-        setSelectrowend(newSelectrowend);
-    }, [data]);
+    const [selectedCells, setSelectedCells] = useState(
+        Array.from({ length: 13 }, () => Array(6).fill(false)) // 초기값: 모든 셀 선택 안 됨
+    );
 
     useEffect(() => {
-        if (Selectrowstart.length && Selectrowend.length && selectedcol.length) {
-            const updatedCells = selectedCells.map((row, rowIndex) =>
-                row.map((cell, colIndex) => {
-                    for (let i = 0; i < Selectrowstart.length; i++) {
-                        const start = Selectrowstart[i];
-                        const end = Selectrowend[i];
-                        const col = selectedcol[i];
+        const initializeCells = () => {
+            if (data.length > 0) {
+                const updatedCells = Array.from({ length: 13 }, () => Array(6).fill(false)); // 초기값
 
-                        // 셀 업데이트 조건 수정
-                        if (rowIndex >= start && rowIndex <= end && colIndex === col) {
-                            return true;
+                data.forEach(({ weekday, startTime, endTime }) => {
+                    const colIndex = weekdayMap[weekday]; // 요일 열 인덱스
+                    const startRow = timeMap[startTime]; // 시작 행 인덱스
+                    const endRow = timeMap[endTime]; // 종료 행 인덱스
+
+                    if (
+                        colIndex !== undefined &&
+                        startRow !== undefined &&
+                        endRow !== undefined &&
+                        startRow <= endRow &&
+                        colIndex >= 1 &&
+                        colIndex <= 5 &&
+                        startRow >= 0 &&
+                        endRow < 13
+                    ) {
+                        for (let rowIndex = startRow; rowIndex < endRow; rowIndex++) {
+                            if (!updatedCells[rowIndex][colIndex]) {
+                                updatedCells[rowIndex][colIndex] = true; // 선택되지 않은 경우에만 선택
+                            }
                         }
                     }
-                    return cell;
-                })
-            );
+                });
 
-            // 기존 상태와 비교하여 변경이 있는 경우에만 업데이트
-            setSelectedCells((prevCells) => {
-                const hasChanged = JSON.stringify(prevCells) !== JSON.stringify(updatedCells);
-                return hasChanged ? updatedCells : prevCells;
-            });
-        }
-    }, [Selectrowstart, Selectrowend, selectedcol]);
+                // rowIndex가 12인 경우 수동 처리
+                updatedCells[12].forEach((_, colIndex) => {
+                    if (colIndex > 0 && colIndex < 6) { // 첫 번째 열 제외 (시간 열)
+                        updatedCells[12][colIndex] = true;
+                    }
+                });
 
+                setSelectedCells(updatedCells);
+            }
+        };
 
+        initializeCells();
+    }, [data]);
 
     const flexArr = [1.3, 2, 2, 2, 2, 2];
 
-
     return (
-        <View
-            style={{ flex: 1, padding: 16, backgroundColor: "#f0f0f0" }}
-        >
+        <View style={{ flex: 1, padding: 16, backgroundColor: "#f0f0f0" }}>
             <View style={{ flexDirection: "row", height: 40 }}>
                 {tableHead.map((head, index) => (
                     <View
@@ -241,13 +106,9 @@ const ViewTimetable = () => {
                 ))}
             </View>
             {tableData.map((row, rowIndex) => (
-                <View
-                    key={`row-${rowIndex}`}
-                    style={{ flexDirection: "row", height: 35 }}
-                >
+                <View key={`row-${rowIndex}`} style={{ flexDirection: "row", height: 35 }}>
                     {row.map((cellText, colIndex) => {
                         if (colIndex === 0) {
-                            // 첫 번째 열
                             return (
                                 <View
                                     key={`cell-${rowIndex}-${colIndex}`}
@@ -267,12 +128,7 @@ const ViewTimetable = () => {
                         }
 
                         return (
-                            <TouchableWithoutFeedback
-                                key={`cell-${rowIndex}-${colIndex}`}
-                                onPress={() => {
-                                    // 아무 동작도 하지 않음 (반응 비활성화)
-                                }}
-                            >
+                            <TouchableWithoutFeedback key={`cell-${rowIndex}-${colIndex}`}>
                                 <View
                                     style={{
                                         flex: flexArr[colIndex],
@@ -281,22 +137,21 @@ const ViewTimetable = () => {
                                         height: 38.5,
                                         borderWidth: 0.4,
                                         borderColor: "#000000",
-                                        // backgroundColor: "#FFFFFF",
                                         backgroundColor: selectedCells[rowIndex][colIndex]
-                                            ? "#C3B87A"
-                                            : "#FFFFFF",
+                                            ? "#FFFFFF" // 선택된 시간 (베이지색)
+                                            : "#C3B87A", // 공강 아님 (흰색)
                                     }}
                                 >
                                     <Text style={{ textAlign: "center" }}>{cellText}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
-
                         );
                     })}
                 </View>
             ))}
             <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('MainFrame')}
                     style={{
                         backgroundColor: '#C3B87A',
                         flex: 1,

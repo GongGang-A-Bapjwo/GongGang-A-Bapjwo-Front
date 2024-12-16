@@ -55,7 +55,7 @@ const Topselection = () => {
     return (
         <>
             <View style={[styles.table, styles.header]}>
-                <View style={styles.togglerow}>
+                <View style={[styles.togglerow, { width: '90%' }]}>
                     {toggleOptions.map((option, index) => (
                         <TouchableOpacity
                             key={index}
@@ -63,6 +63,7 @@ const Topselection = () => {
                             style={[
                                 styles.togglecell,
                                 selectedIndex === index && styles.toggleselectedcell,
+                                { width: '50%' },
                             ]}
                         >
                             <Text

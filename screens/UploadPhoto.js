@@ -11,6 +11,7 @@ const UploadPhoto = () => {
     const navigation = useNavigation();
     const [image, setImage] = useState(null);
     const [file, setFile] = useState(null);
+    const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt";
 
     const pickImage = async () => {
         try {
@@ -62,7 +63,7 @@ const UploadPhoto = () => {
                 formData,
                 {
                     headers: {
-                        "Authorization": "Bearer KVyODXJIwOfHvgV_Z1O_OGfn1nJz3L0Fz6hL5wKmO9A_Je4AFck0PQAAAAQKPCSZAAABk8qQ1CXMISgqRbFCUQ",
+                        "Authorization": `Bearer ${token}`,
                         'Content-Type': 'multipart/form-data',
                     },
                 }
@@ -70,7 +71,7 @@ const UploadPhoto = () => {
 
             console.log('업로드 성공:', response.data);
             alert('사진 업로드 성공!');
-            navigation.navigate('ViewTimetable');
+            navigation.navigate('ViewTimetable', { data: response.data });
         } catch (error) {
             console.error('업로드 실패:', error);
             alert('사진 업로드 중 오류가 발생했습니다.');

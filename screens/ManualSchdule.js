@@ -23,6 +23,8 @@ const ManualSchedule = () => {
         ['21', '', '', '', '', ''],
     ];
 
+    const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt";
+
     const [selectedCells, setSelectedCells] = useState(
         Array.from({ length: tableData.length }, () =>
             Array.from({ length: tableHead.length }, () => false)
@@ -151,7 +153,7 @@ const ManualSchedule = () => {
                 },
                 {
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt",
+                        "Authorization": `Bearer ${token}`,
                     },
                 }
             );

@@ -66,6 +66,7 @@ const PromiseBoard = ({ istoggle }) => {
                                 category,
                                 time: `${startFormatted} ~ ${endFormatted}`,
                                 weekday: board.weekday,
+
                             });
                         });
                     } else if (istoggle) {

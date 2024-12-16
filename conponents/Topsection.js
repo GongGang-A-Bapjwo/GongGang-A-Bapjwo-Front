@@ -8,7 +8,7 @@ const Topsection = () => {
     const navigation = useNavigation(); // navigation 훅 가져오기
 
     return (
-        <View style={[styles.table, { marginTop: 25 }]}>
+        <View style={[styles.table]}>
             <View style={styles.row}>
                 <View style={styles.topcellleft}>
                     <TouchableOpacity onPress={() => navigation.navigate('Timetable')}>
