@@ -1,9 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Touchable, TouchableOpacity, Alert, Image } from 'react-native';
 import { styles } from '../styles';
+import axios from 'axios';
 
 const Matching = ({ onBack }) => {
-    var rawdata = [['월', '15-17'], ['금', '16-17'], ['화', '9-11'], ['목', '11-15']]
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [rawData, setRawdata] = useState('');
+
+    const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MTMsImV4cCI6MTczNTAyMDczMiwicm9sZSI6IlJPTEVfTUVNQkVSIn0.DM8Tk01sjLF1gDZkOZa_2fegCSHlzdxWaJPIt_bxJqlFPywhrL_MiofFdLrD96h5";
+    const url = "http://129.154.55.198:80/api/appointment/meeting"
+
+    useEffect(() => {
+        const fetchRemainingCount = async () => {
+            try {
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                console.log('Response data:', response.data);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRemainingCount();
+    }, []);
+
+    if (loading) {
+        return <Text style={{ textAlign: 'center', marginTop: 50 }}>Loading...</Text>;
+    }
+
+    if (error) {
+        return <Text style={{ textAlign: 'center', marginTop: 50 }}>Error fetching data.</Text>;
+    }
+
+    // var rawdata = [['월', '15-17'], ['금', '16-17'], ['화', '9-11'], ['목', '11-15']]
     // var rawdata = []
     var processeddata = []
     const [pressedIndex, setPressedIndex] = useState(null);

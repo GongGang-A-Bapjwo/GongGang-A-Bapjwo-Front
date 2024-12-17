@@ -11,6 +11,8 @@ import MakeParty from '../screens/MakeParty';
 const Topselection = () => {
     const [currentPage, setCurrentPage] = useState('Today');
     const [managePage, setManagePage] = useState(null);
+    const [roomId, setRoomId] = useState(0);
+    const [entranceCode, setEntranceCode] = useState(0);
 
     const toggleOptions = [
         { label: 'Today', value: 'Today' },
@@ -24,9 +26,14 @@ const Topselection = () => {
             case 'Join':
                 return (
                     <Join
-                        onSelectManage={() => setCurrentPage('Manage')}
+                        onSelectManage={(selectedRoomId, selectedEntrance) => {
+                            setRoomId(selectedRoomId); // roomId 상태 설정
+                            setEntranceCode(selectedEntrance);
+                            setCurrentPage('Manage'); // Manage로 이동
+                        }}
                         onSelectMakeParty={() => setCurrentPage('MakeParty')}
                     />
+
                 );
             case 'Manage':
                 if (managePage) {
@@ -37,10 +44,14 @@ const Topselection = () => {
                     <Manage
                         onSelectOption1={() => setManagePage('Matching')}
                         onSelectOption2={() => setManagePage('EditAppt')}
+                        roomId={roomId}
+                        entranceCode={entranceCode}
                     />
                 );
             case 'MakeParty':
-                return <MakeParty />;
+                return <MakeParty
+                    roomId={roomId}
+                    entranceCode={entranceCode} />;
             default:
                 return <Text>Page not found</Text>; // 기본 페이지 또는 오류 메시지 표시
         }
