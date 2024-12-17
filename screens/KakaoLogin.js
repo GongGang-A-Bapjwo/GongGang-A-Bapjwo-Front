@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const KakaogLogin = () => {
     const navigation = useNavigation();
+    const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiZXhwIjoxNzM1MDMyNzQ5LCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.31c9kDajutIKXfs9JDS7AKpVSkZu0Yo6S9tUL5ibkgvFu2mzYpGvizD094Yyuqdw";
+
 
     // const CLIENT_ID = 'f2e25f4e863b53bd8f26299a1d14136d'; // 카카오 REST API 키
     // const REDIRECT_URI = 'http://auth.expo.io/@ksy2384/gonganababjwo';
@@ -65,7 +67,7 @@ const KakaogLogin = () => {
         try {
             const response = await axios.post(`${API_URL}?authorizationCode=${authorizationCode}`, data, {
                 headers: {
-                    "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0MjU4MDQxLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.wL4Tk0pNL5JcarGp8Qq-vnNu9v8LgZCq9oLc8BCGNHGqVwzdlUK4R9yvqYj346WS",
+                    "accessToken": `${token}`,
                     'Content-Type': 'application/json',
                 },
             });

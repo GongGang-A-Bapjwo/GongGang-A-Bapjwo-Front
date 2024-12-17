@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import axios from "axios";
 const ManualSchedule = () => {
+    const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiZXhwIjoxNzM1MDMyNzQ5LCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.31c9kDajutIKXfs9JDS7AKpVSkZu0Yo6S9tUL5ibkgvFu2mzYpGvizD094Yyuqdw";
+
     const navigation = useNavigation();
     const tableHead = ["시간", "월", "화", "수", "목", "금"];
     const tableData = [
@@ -151,7 +153,7 @@ const ManualSchedule = () => {
                 },
                 {
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0ODc1OTIyLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.o_XkvMmqSY4kbTHI4x0VdgaGI8t8NZM3JXTdZO5rQ6uAQHQ27NuzJW7P2-GBuZgt",
+                        "Authorization": `Bearer ${token}`,
                     },
                 }
             );

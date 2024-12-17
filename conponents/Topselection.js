@@ -11,6 +11,7 @@ import MakeParty from '../screens/MakeParty';
 const Topselection = () => {
     const [currentPage, setCurrentPage] = useState('Today');
     const [managePage, setManagePage] = useState(null);
+    const [roomId, setRoomId] = useState(0);
 
     const toggleOptions = [
         { label: 'Today', value: 'Today' },
@@ -24,23 +25,38 @@ const Topselection = () => {
             case 'Join':
                 return (
                     <Join
-                        onSelectManage={() => setCurrentPage('Manage')}
+                        onSelectManage={(selectedRoomId) => {
+                            setRoomId(selectedRoomId); // roomId 상태 설정
+                            setCurrentPage('Manage'); // Manage로 이동
+                        }}
                         onSelectMakeParty={() => setCurrentPage('MakeParty')}
                     />
+
                 );
             case 'Manage':
                 if (managePage) {
-                    const BackComponent = managePage === 'Matching' ? Matching : EditAppt;
-                    return <BackComponent onBack={() => setManagePage(null)} />;
+                    // managePage가 객체일 경우 페이지를 판별
+                    const { page, roomId } = managePage;
+
+                    if (page === 'Matching') {
+                        return <Matching roomId={roomId} onBack={() => setCurrentPage('Join')} />;
+                    } else if (page === 'EditAppt') {
+                        return <EditAppt onBack={() => setManagePage(null)} />;
+                    }
                 }
+
                 return (
                     <Manage
-                        onSelectOption1={() => setManagePage('Matching')}
-                        onSelectOption2={() => setManagePage('EditAppt')}
+                        onSelectOption1={(roomId) => setManagePage({ page: 'Matching', roomId })}
+                        onSelectOption2={() => setManagePage({ page: 'EditAppt' })}
+                        roomId={roomId}
                     />
                 );
+
             case 'MakeParty':
-                return <MakeParty />;
+                return <MakeParty
+                    roomId={roomId}
+                />;
             default:
                 return <Text>Page not found</Text>; // 기본 페이지 또는 오류 메시지 표시
         }
@@ -55,7 +71,7 @@ const Topselection = () => {
     return (
         <>
             <View style={[styles.table, styles.header]}>
-                <View style={styles.togglerow}>
+                <View style={[styles.togglerow, { width: '90%' }]}>
                     {toggleOptions.map((option, index) => (
                         <TouchableOpacity
                             key={index}
@@ -63,6 +79,7 @@ const Topselection = () => {
                             style={[
                                 styles.togglecell,
                                 selectedIndex === index && styles.toggleselectedcell,
+                                { width: '50%' }
                             ]}
                         >
                             <Text
@@ -76,7 +93,7 @@ const Topselection = () => {
                         </TouchableOpacity>
                     ))}
                 </View>
-            </View>
+            </View >
             {renderPage()}
         </>
     );

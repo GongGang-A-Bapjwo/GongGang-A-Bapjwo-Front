@@ -8,8 +8,8 @@ const Topsection = () => {
     const navigation = useNavigation(); // navigation 훅 가져오기
 
     return (
-        <View style={[styles.table, { marginTop: 25 }]}>
-            <View style={styles.row}>
+        <View style={[styles.table, { marginTop: 0, height: 100, backgroundColor: '#FCFAF7' }]}>
+            <View style={[styles.row, { position: 'relative', top: 12, backgroundColor: '#FCFAF7' }]}>
                 <View style={styles.topcellleft}>
                     <TouchableOpacity onPress={() => navigation.navigate('Timetable')}>
                         <Image source={require('../assets/images/calendar.png')} style={{ width: 24, height: 24 }} />
