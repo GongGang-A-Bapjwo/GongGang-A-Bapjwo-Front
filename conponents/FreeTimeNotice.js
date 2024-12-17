@@ -7,6 +7,7 @@ import FreeTimeNoticeTitle from './FreeTimeNoticeTitle';
 const FreeTimeNotice = () => {
     const [timeSlots, setTimeSlots] = useState([]);
     const [error, setError] = useState(null);
+    const columnCount = 2;
 
     const defaultTimeSlots = ['없음', '없음', '없음', '없음'];
 
@@ -61,38 +62,59 @@ const FreeTimeNotice = () => {
 
     // Split into groups of 2
     const groupedTimeSlots = [];
+
     for (let i = 0; i < displayTimeSlots.length; i += 2) {
         groupedTimeSlots.push(displayTimeSlots.slice(i, i + 2));
     }
 
+    const flattenedData = groupedTimeSlots.flat(); // 데이터를 평탄화 (1차원 배열로 만듦)
+
+    // 데이터를 행 기준으로 재정렬
+    const rowBasedData = Array.from({ length: Math.ceil(displayTimeSlots.length / columnCount) }, (_, rowIndex) =>
+        displayTimeSlots.slice(rowIndex * columnCount, (rowIndex + 1) * columnCount)
+    );
+
     return (
-        <ScrollView>
+        <ScrollView style={{ position: 'relative', top: 10 }}>
             <FreeTimeNoticeTitle />
-            <ScrollView horizontal>
-                <View style={{ flexDirection: 'row', marginTop: 0, height: 300, position: 'relative', left: 15, top: -20 }}>
-                    {groupedTimeSlots.map((group, idx) => (
-                        <View key={idx} style={{ marginHorizontal: 5 }}>
-                            {group.map((time, subIdx) => (
-                                <View
-                                    key={subIdx}
-                                    style={[
-                                        styles.freebox,
-                                        { width: 180, height: 130, marginVertical: -8, justifyContent: 'center', alignItems: 'center' },
-                                    ]}
-                                >
-                                    <Image
-                                        source={require('../assets/images/calendarcheck.png')}
-                                        style={{ width: 24, height: 24, marginBottom: 10, position: 'relative', left: -60 }}
-                                    />
-                                    <Text style={[styles.freeboxtitle, { width: '90%' }]}>공강</Text>
-                                    <Text style={[styles.freeboxtime, { width: '90%' }]}>{time}</Text>
-                                </View>
-                            ))}
-                        </View>
-                    ))}
-                </View>
-            </ScrollView>
+            <View
+                style={{
+                    flexDirection: 'row', // 메인 방향은 가로
+                    flexWrap: 'wrap', // 넘치는 요소는 줄 바꿈
+                    marginTop: 0,
+                    height: 'auto',
+                    position: 'relative',
+                    left: 15,
+                    top: -20,
+                }}
+            >
+                {rowBasedData.flat().map((time, idx) => ( // 데이터를 평탄화
+                    <View
+                        key={idx}
+                        style={[
+                            styles.freebox,
+                            {
+                                width: 180,
+                                height: 130,
+                                margin: 4, // 간격 설정
+                                marginBottom: 0,
+                                marginTop: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            },
+                        ]}
+                    >
+                        <Image
+                            source={require('../assets/images/calendarcheck.png')}
+                            style={{ width: 24, height: 24, marginBottom: 10, position: 'relative', left: -60 }}
+                        />
+                        <Text style={[styles.freeboxtitle, { textAlign: 'center', width: '90%', textAlign: 'left' }]}>공강</Text>
+                        <Text style={[styles.freeboxtime, { textAlign: 'center', width: '90%', textAlign: 'left' }]}>{time}</Text>
+                    </View>
+                ))}
+            </View>
         </ScrollView>
+
     );
 };
 

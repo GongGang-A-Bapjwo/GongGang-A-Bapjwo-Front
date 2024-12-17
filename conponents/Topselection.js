@@ -56,6 +56,7 @@ const Topselection = () => {
             case 'MakeParty':
                 return <MakeParty
                     roomId={roomId}
+                    onBack={() => setCurrentPage('Join')}
                 />;
             default:
                 return <Text>Page not found</Text>; // 기본 페이지 또는 오류 메시지 표시

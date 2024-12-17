@@ -25,6 +25,17 @@ const PromiseBoard = ({ istoggle }) => {
         return categoryMap[category] || '기타';
     };
 
+    const weekMapping = {
+        MONDAY: '월',
+        TUESDAY: '화',
+        WEDNESDAY: '수',
+        THURSDAY: '목',
+        FRIDAY: '금',
+        SATURDAY: '토',
+        SUNDAY: '일',
+    };
+
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -65,7 +76,7 @@ const PromiseBoard = ({ istoggle }) => {
                             appointments.push({
                                 category,
                                 time: `${startFormatted} ~ ${endFormatted}`,
-                                weekday: board.weekday,
+                                weekday: weekMapping[board.weekday],
                             });
                         });
                     } else if (istoggle) {
@@ -77,7 +88,7 @@ const PromiseBoard = ({ istoggle }) => {
                         appointments.push({
                             category,
                             time: `${startFormatted} ~ ${endFormatted}`,
-                            weekday: boardArray.weekday,
+                            weekday: weekMapping[boardArray.weekday],
                         });
                     }
                 });
@@ -113,7 +124,7 @@ const PromiseBoard = ({ istoggle }) => {
     }
 
     return (
-        <View style={{ position: 'relative', top: -50 }}>
+        <View style={{ position: 'relative', top: -30 }}>
             {appointmentData.length > 0 ? (
                 appointmentData.map((appointment, index) => (
                     <View

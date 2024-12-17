@@ -54,7 +54,17 @@ export default function App() {
                 headerStyle: { backgroundColor: '#FCFAF7' },
               }}
             />
-            <Stack.Screen name="Settings" component={Settings} />
+            <Stack.Screen name="Settings" component={Settings} options={{ title: '설정' }} />
+            <Stack.Screen
+              name="UploadPhoto"
+              component={UploadPhoto}
+              options={{ headerTitle: '시간표를 등록해주세요' }}
+            />
+            <Stack.Screen
+              name="ViewTimetable"
+              component={ViewTimetable}
+              options={{ headerTitle: '이 시간표가 맞나요?', headerStyle: { height: 120, backgroundColor: '#F0F0F0', elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 }, headerTitleAlign: 'center', headerTitleStyle: { fontWeight: 'bold' } }}
+            />
 
           </>
         ) : (

@@ -266,7 +266,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                     group.map((content, index) => (
                         <View key={index} style={[styles.promiseboardcontent, { height: 100, marginTop: 10 }]}>
                             <View style={[styles.row3, { marginBottom: 5, marginLeft: 16 }]}>
-                                <Text>{content.category || '전체'}</Text>
+                                <Text>{categoryMapping[content.category] || '전체'}</Text>
                                 {content.isOwner && (
                                     <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30, position: 'absolute', left: 115, top: -30 }]}>
                                         <TouchableOpacity onPress={() => onSelectManage(content.id)}>

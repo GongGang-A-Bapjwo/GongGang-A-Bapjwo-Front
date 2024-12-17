@@ -29,7 +29,7 @@ const Today = () => {
 
             {/* 약속 보기 Toggle */}
             <View style={[styles.row2, styles.pushblock2]}>
-                <View style={[styles.row2, { justifyContent: 'flex-start', position: 'relative', top: -50 }]}>
+                <View style={[styles.row2, { justifyContent: 'flex-start', position: 'relative', top: -30 }]}>
                     <Text style={{ marginRight: 15, position: 'relative', left: -25 }}>
                         {isToggled ? '공강 시간대의 약속 보기' : '모든 시간대의 약속 보기'}
                     </Text>
@@ -44,7 +44,7 @@ const Today = () => {
             </View>
 
             {/* 보드 제목 */}
-            <View style={[styles.row2, { height: 25, marginTop: 10, position: 'relative', top: -50, left: -40 }]}>
+            <View style={[styles.row2, { height: 25, marginTop: 10, position: 'relative', top: -30, left: -40 }]}>
                 {!isToggled ? (
                     <>
                         <Image source={require('../assets/images/thunder.png')} style={{ width: 32, height: 32 }} />
@@ -59,7 +59,7 @@ const Today = () => {
                 )}
             </View>
             {/* 스크롤 가능한 약속 보드 */}
-            <View style={[styles.row, { position: 'relative', top: -50 }]}>
+            <View style={[styles.row, { position: 'relative', top: -30 }]}>
                 <ScrollView
                     horizontal={true}
                     style={[styles.scrollview, { marginLeft: 20, marginTop: 0 }]}

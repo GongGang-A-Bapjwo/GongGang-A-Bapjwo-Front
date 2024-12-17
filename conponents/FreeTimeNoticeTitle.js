@@ -68,7 +68,7 @@ const FreeTimeNoticeTitle = () => {
 
     return (
         <View style={styles.table}>
-            <View style={[styles.row, { marginBottom: 0, position: 'relative', left: -48 }]}>
+            <View style={[styles.row, { marginBottom: 0, position: 'relative', left: -48, top: -10 }]}>
                 <Image source={require('../assets/images/calendarcheck.png')} style={{ width: 30, height: 30, marginRight: 10, position: 'relative', left: -20 }} />
                 <Text style={{ fontSize: 20, fontWeight: 'bold', position: 'relative', left: -20 }} >
                     오늘의 공강 ({weekday ? weekday : '로딩 중...'})

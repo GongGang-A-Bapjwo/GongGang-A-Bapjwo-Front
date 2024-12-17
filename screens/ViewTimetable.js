@@ -122,7 +122,7 @@ const ViewTimetable = ({ route }) => {
                                         backgroundColor: "#F7F7F7",
                                     }}
                                 >
-                                    <Text>{cellText}</Text>
+                                    <Text>{cellText || ''}</Text>
                                 </View>
                             );
                         }
@@ -142,7 +142,7 @@ const ViewTimetable = ({ route }) => {
                                             : "#C3B87A", // 공강 아님 (흰색)
                                     }}
                                 >
-                                    <Text style={{ textAlign: "center" }}>{cellText}</Text>
+                                    <Text style={{ textAlign: "center" }}>{cellText || ''}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         );
@@ -163,9 +163,11 @@ const ViewTimetable = ({ route }) => {
                             height: 50,
                             borderRadius: 24,
                         }}
-                    >                    <View>
-                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>네 맞아요</Text>
-                        </View>
+                    >
+                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>
+                            {typeof '네 맞아요' === 'string' ? '네 맞아요' : ''}
+                        </Text>
+
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
@@ -181,9 +183,11 @@ const ViewTimetable = ({ route }) => {
                             height: 50,
                             borderRadius: 24,
                         }}
-                    >                    <View>
-                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>수정이 필요해요</Text>
-                        </View>
+                    >
+                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>
+                            {typeof '수정이 필요해요' === 'string' ? '수정이 필요해요' : ''}
+
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
