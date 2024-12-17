@@ -12,39 +12,48 @@ import { useNavigation } from '@react-navigation/native';
 const KakaogLogin = () => {
     const navigation = useNavigation();
 
-    const CLIENT_ID = 'f2e25f4e863b53bd8f26299a1d14136d'; // 카카오 REST API 키
-    const REDIRECT_URI = 'http://auth.expo.io/@ksy2384/gonganababjwo';
-    // 카카오 로그인 URL 생성
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
+    // const CLIENT_ID = 'f2e25f4e863b53bd8f26299a1d14136d'; // 카카오 REST API 키
+    // const REDIRECT_URI = 'http://auth.expo.io/@ksy2384/gonganababjwo';
+
+    // // 카카오 로그인 URL 생성
+    // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
+
+    // // const handleLogin = async () => {
+    // //     try {
+    // //         const result = await WebBrowser.openAuthSessionAsync(KAKAO_AUTH_URL, REDIRECT_URI);
+    // //         console.log('redirecturl:', result);
+    // //         if (result.type === 'success' && result.url) {
+    // //             const url = new URL(result.url); // 리다이렉트된 URL
+    // //             // const code = "7m3d1c-fMhFHXmt0DjYcwJDPMuH3htsmknHI_-HRXiqPhL9x63UFcQAAAAQKKwynAAABk8ljSU6UJG13ldIf8A"
+    // //             const code = url.searchParams.get('code'); // Authorization Code 추출
+    // //             console.log('code:', code);
+    // //             if (code) {
+    // //                 console.log('Authorization Code:', code);
+    // //                 await sendAuthorizationCode(code);
+    // //             } else {
+    // //                 console.log('Error', 'Authorization code not found');
+    // //             }
+    // //         } else if (result.type === 'cancel') {
+    // //             console.log('Error', 'Login process was cancelled');
+    // //         } else {
+    // //             console.log('Error', 'Login failed');
+    // //         }
+    // //     } catch (error) {
+    // //         console.error('Login Error:', error.message);
+    // //         console.log('Error', 'Login failed');
+    // //     } finally {
+    // //         WebBrowser.dismissBrowser(); // 세션 종료
+    // //     }
+    // // };
 
     const handleLogin = async () => {
         try {
-            const result = await WebBrowser.openAuthSessionAsync(KAKAO_AUTH_URL, REDIRECT_URI);
-            console.log('redirecturl:', result);
-            if (result.type === 'success' && result.url) {
-                const url = new URL(result.url); // 리다이렉트된 URL
-                const code = url.searchParams.get('code'); // Authorization Code 추출
-                console.log('code:', code);
-                if (code) {
-                    console.log('Authorization Code:', code);
-                    await sendAuthorizationCode(code);
-                } else {
-                    console.log('Error', 'Authorization code not found');
-                }
-            } else if (result.type === 'cancel') {
-                console.log('Error', 'Login process was cancelled');
-            } else {
-                console.log('Error', 'Login failed');
-            }
-        } catch (error) {
-            console.error('Login Error:', error.message);
-            console.log('Error', 'Login failed');
-        } finally {
-            WebBrowser.dismissBrowser(); // 세션 종료
+            const result = await axios.post('')
         }
-    };
-
-
+        catch {
+            console.log('login fail')
+        }
+    }
 
     // API로 authorizationCode 전송
     const sendAuthorizationCode = async (authorizationCode) => {
@@ -56,11 +65,13 @@ const KakaogLogin = () => {
         try {
             const response = await axios.post(`${API_URL}?authorizationCode=${authorizationCode}`, data, {
                 headers: {
+                    "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6OSwiZXhwIjoxNzM0MjU4MDQxLCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.wL4Tk0pNL5JcarGp8Qq-vnNu9v8LgZCq9oLc8BCGNHGqVwzdlUK4R9yvqYj346WS",
                     'Content-Type': 'application/json',
                 },
             });
             console.log('API Response:', response.data);
             console.log('Success', 'Login successful');
+            navigation.navigate('ScheduleRegister')
 
         } catch (error) {
             console.error('API Error:', error.response?.data || error.message);
@@ -148,7 +159,7 @@ const KakaogLogin = () => {
                 </View>
                 <View style={[styles.row3, { width: '95%' }]}>
                     <TouchableOpacity
-                        onPress={() => { handleLogin() }}
+                        onPress={() => { navigation.navigate('ScheduleRegister') }}
                         style={{
                             backgroundColor: '#FAE300',
                             flex: 1,

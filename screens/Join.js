@@ -42,7 +42,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
             inputRef.current.focus();
         }
         setIsInputFocused(true);
-        console.log('Current scrollY:', scrollY);
+        // console.log('Current scrollY:', scrollY);
 
         setTimeout(() => {
             if (scrollViewRef.current) {

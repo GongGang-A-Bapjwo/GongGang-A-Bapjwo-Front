@@ -68,6 +68,7 @@ const ScheduleRegister = () => {
                         </View>
                     </TouchableOpacity>
                 </View>
+
             </View>
         </View>
     )
