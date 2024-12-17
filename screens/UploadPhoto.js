@@ -80,7 +80,7 @@ const UploadPhoto = () => {
     };
 
     return (
-        <View style={[styles.container, { justifyContent: 'Top', flex: 1, paddingLeft: 20, paddingTop: 10 }]}>
+        <View style={[styles.container, { justifyContent: 'Top', flex: 1, paddingLeft: 20, position: 'relative', top: -20 }]}>
             <View style={[styles.table, { width: '95%', height: 470, borderRadius: 12 }]}>
                 {/* <View style={[styles.row3, { position: 'relative', top: 10 }]}>
                     <Text style={[styles.title, { position: 'relative', top: 20, height: 30 }]}>시간표를 등록해주세요</Text>
@@ -100,7 +100,7 @@ const UploadPhoto = () => {
                         </>
                     )}
                 </View>
-                <View style={{ position: 'relative', backgroundColor: '#eee', top: -290, left: 0, flex: 1, width: '100%' }}>
+                <View style={{ position: 'relative', backgroundColor: '#eee', top: -280, left: 0, flex: 1, width: '100%' }}>
                     <View style={[styles.row3, { marginTop: 0 }]}>
                         <TouchableOpacity
                             onPress={() => { pickImage() }}

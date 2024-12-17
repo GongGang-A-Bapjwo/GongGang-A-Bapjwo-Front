@@ -149,41 +149,43 @@ const ViewTimetable = ({ route }) => {
                     })}
                 </View>
             ))}
-            <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('MainFrame')}
-                    style={{
-                        backgroundColor: '#C3B87A',
-                        flex: 1,
-                        width: '105%',
-                        position: 'absolute',
-                        top: 20,
-                        left: -10,
-                        height: 50,
-                        borderRadius: 24,
-                    }}
-                >                    <View>
-                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>네 맞아요</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('UploadPhoto')}
-                    style={{
-                        backgroundColor: '#C3B87A',
-                        flex: 1,
-                        width: '105%',
-                        position: 'absolute',
-                        top: 60,
-                        left: -10,
-                        height: 50,
-                        borderRadius: 24,
-                    }}
-                >                    <View>
-                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>수정이 필요해요</Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={{ position: 'relative', top: 5 }}>
+                <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('MainFrame')}
+                        style={{
+                            backgroundColor: '#C3B87A',
+                            flex: 1,
+                            width: '105%',
+                            position: 'absolute',
+                            top: 20,
+                            left: -10,
+                            height: 50,
+                            borderRadius: 24,
+                        }}
+                    >                    <View>
+                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>네 맞아요</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={[styles.row3, { width: '95%', position: 'relative', left: 10 }]}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('UploadPhoto')}
+                        style={{
+                            backgroundColor: '#C3B87A',
+                            flex: 1,
+                            width: '105%',
+                            position: 'absolute',
+                            top: 60,
+                            left: -10,
+                            height: 50,
+                            borderRadius: 24,
+                        }}
+                    >                    <View>
+                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>수정이 필요해요</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

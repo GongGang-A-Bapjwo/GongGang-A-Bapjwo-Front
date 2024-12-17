@@ -4,10 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 const ScheduleRegister = () => {
     const navigation = useNavigation();
     return (
-        <View style={[styles.container]}>
+        <View style={[styles.container, { position: 'relative', top: -30 }]} >
             <View style={styles.table}>
                 <View style={[styles.row3, styles.promiseboardcontent, { position: 'absolute', top: 10, height: 190 }]}>
-                    <Text style={[styles.title, { position: 'relative', top: 20 }]}>user님,</Text>
+                    <Text style={[styles.title, { position: 'relative', top: 20 }]}>유저 님,</Text>
                 </View>
                 <View style={[styles.row3, { position: 'absolute', top: 95, height: 30 }]}>
                     <Text style={[styles.title, {}]}>공강아밥줘에</Text>
@@ -31,16 +31,14 @@ const ScheduleRegister = () => {
                         onPress={() => navigation.navigate('UploadPhoto')}
                         style={{
                             backgroundColor: '#C3B87A',
-                            flex: 1,
                             width: '95%',
                             position: 'absolute',
                             top: 350,
                             height: 50,
                             borderRadius: 24,
                         }}
-                    >                    <View>
-                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 자동등록</Text>
-                        </View>
+                    >
+                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 자동등록</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ position: 'absolute', top: 440 }}>
@@ -63,9 +61,8 @@ const ScheduleRegister = () => {
                             height: 50,
                             borderRadius: 24,
                         }}
-                    >                    <View>
-                            <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 수동 등록</Text>
-                        </View>
+                    >
+                        <Text style={{ fontSize: 16, textAlign: 'center', fontWeight: 'bold', position: 'relative', top: 15, color: '#FFFFFF' }}>시간표 수동 등록</Text>
                     </TouchableOpacity>
                 </View>
 
