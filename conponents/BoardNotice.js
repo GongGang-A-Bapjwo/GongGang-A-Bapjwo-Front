@@ -8,7 +8,7 @@ const BoardNotice = ({ istoggle }) => {
             {!istoggle ? (
                 <>
                     <Image source={require('../assets/images/thunder.png')} style={{ width: 32, height: 32 }} />
-                    <Text style={[{ marginRight: 15, position: 'relative', left: 10, fontWeight: 'bold', fontSize: 20 }]}>지금 참여할 수 있는 약속</Text>
+                    <Text style={[{ marginRight: 15, position: 'relative', left: -10, fontWeight: 'bold', fontSize: 20 }]}>지금 참여할 수 있는 약속</Text>
                 </>
             ) : (
                 <>

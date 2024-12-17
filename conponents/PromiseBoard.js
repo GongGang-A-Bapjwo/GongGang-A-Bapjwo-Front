@@ -113,7 +113,7 @@ const PromiseBoard = ({ istoggle }) => {
     }
 
     return (
-        <View style={{ position: 'relative', top: -90 }}>
+        <View style={{ position: 'relative', top: -50 }}>
             {appointmentData.length > 0 ? (
                 appointmentData.map((appointment, index) => (
                     <View

@@ -84,8 +84,8 @@ const FreeTimeNotice = () => {
                                         source={require('../assets/images/calendarcheck.png')}
                                         style={{ width: 24, height: 24, marginBottom: 10, position: 'relative', left: -60 }}
                                     />
-                                    <Text style={styles.freeboxtitle}>공강</Text>
-                                    <Text style={styles.freeboxtime}>{time}</Text>
+                                    <Text style={[styles.freeboxtitle, { width: '90%' }]}>공강</Text>
+                                    <Text style={[styles.freeboxtime, { width: '90%' }]}>{time}</Text>
                                 </View>
                             ))}
                         </View>

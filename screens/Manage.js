@@ -149,8 +149,20 @@ const Manage = ({ onSelectOption1, onSelectOption2, roomId }) => {
                             </View>
                         </View>
                     )} */}
-
-                    <View style={styles.row3}>
+                    {remaining !== 0 ? (
+                        <View style={styles.row3}>
+                            <View style={[styles.promiseboardcontent, { marginTop: 300, height: 94, position: 'relative', top: 250 }]}>
+                                <TouchableWithoutFeedback onPress={() => onSelectOption2()}>
+                                    <View style={styles.row3}>
+                                        <Text style={[styles.title, { fontSize: 20, height: 30, marginLeft: 16 }]}>공강팟 설정 변경하기</Text>\
+                                    </View>
+                                    <View style={styles.row3}>
+                                        <Text style={{ marginTop: 30, height: 30, marginLeft: 16 }}>공강팟의 설정을 수정하고 싶다면 여기를 터치하세요</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </View>
+                    ) : (<View style={styles.row3}>
                         <View style={[styles.promiseboardcontent, { marginTop: 300, height: 94 }]}>
                             <TouchableWithoutFeedback onPress={() => onSelectOption2()}>
                                 <View style={styles.row3}>
@@ -161,7 +173,7 @@ const Manage = ({ onSelectOption1, onSelectOption2, roomId }) => {
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>
-                    </View>
+                    </View>)}
                 </View>
             </View>
         </ScrollView >

@@ -12,7 +12,7 @@ const Topsection = () => {
             <View style={[styles.row, { position: 'relative', top: 12, backgroundColor: '#FCFAF7' }]}>
                 <View style={styles.topcellleft}>
                     <TouchableOpacity onPress={() => navigation.navigate('Timetable')}>
-                        <Image source={require('../assets/images/calendar.png')} style={{ width: 24, height: 24 }} />
+                        <Image source={require('../assets/images/calendar.png')} style={{ width: 24, height: 24, position: 'relative', left: -16 }} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.topcellmiddle}>
@@ -20,7 +20,7 @@ const Topsection = () => {
                 </View>
                 <View style={styles.topcellright}>
                     <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-                        <Image source={require('../assets/images/settings.png')} style={{ width: 24, height: 24 }} />
+                        <Image source={require('../assets/images/settings.png')} style={{ width: 24, height: 24, position: 'relative', left: 16 }} />
                     </TouchableOpacity>
                 </View>
             </View>

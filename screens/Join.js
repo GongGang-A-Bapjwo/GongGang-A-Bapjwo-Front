@@ -94,16 +94,32 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                     var weekday = appt.decidedWeekday; // 요일                         
                     var startTime = appt.decidedStartTime;
                     var endTime = appt.decidedEndTime;
-                    const koreanWeekday = weekdayMapping[weekday] || weekday; // 매핑 적용
-                    const startmapping = convertTo12HourFormat(startTime);
-                    const endmapping = convertTo12HourFormat(endTime);
 
-                    setDate({
-                        weekday: koreanWeekday,
-                        startTime: startmapping,
-                        endTime: endmapping,
-                    })
-                    console.log('Date:', date);
+                    let koreanWeekday = null;
+
+                    // 시간 변환
+                    if (appt.decidedStartTime != null) {
+                        startmapping = convertTo12HourFormat(appt.decidedStartTime);
+                    }
+
+                    if (appt.decidedEndTime != null) {
+                        endmapping = convertTo12HourFormat(appt.decidedEndTime);
+                    }
+
+                    // 날짜 상태 설정
+                    if (koreanWeekday && startmapping && endmapping) {
+                        setDate({
+                            weekday: koreanWeekday,
+                            startTime: startmapping,
+                            endTime: endmapping,
+                        });
+                        console.log('Date:', {
+                            weekday: koreanWeekday,
+                            startTime: startmapping,
+                            endTime: endmapping,
+                        });
+                    }
+
 
                     try {
                         const membersResponse = await axios.get(`${url2Base}${roomId}`, {
@@ -252,7 +268,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                             <View style={[styles.row3, { marginBottom: 5, marginLeft: 16 }]}>
                                 <Text>{content.category || '전체'}</Text>
                                 {content.isOwner && (
-                                    <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30, position: 'relative', left: 70 }]}>
+                                    <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30, position: 'absolute', left: 115, top: -30 }]}>
                                         <TouchableOpacity onPress={() => onSelectManage(content.id)}>
                                             <Image
                                                 source={require('../assets/images/manager.png')}
@@ -261,7 +277,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                                         </TouchableOpacity>
                                     </View>
                                 )}
-                                <View style={[styles.circleIcon, { marginLeft: 8, marginTop: 30, position: 'relative', left: 70 }]}>
+                                <View style={[styles.circleIcon, { marginLeft: 8, marginTop: 30, position: 'absolute', left: 278, top: -30 }]}>
                                     <TouchableOpacity onPress={() => ExitToast(content.id)}>
                                         <Image
                                             source={require('../assets/images/exit.png')}
@@ -271,11 +287,11 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                                 </View>
                             </View>
                             <View style={[styles.row3, { marginLeft: 16, marginBottom: 3 }]}>
-                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{content.title || '제목 없음'}</Text>
+                                <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'relative', top: -3, left: -2 }}>{content.title || '제목 없음'}</Text>
                             </View>
                             <View style={[styles.row3, { marginLeft: 16 }]}>
-                                <Text style={{ color: '#9C8F4A' }}>({date.weekday}) {date.startTime} - {date.endTime}</Text>
-                                <Text style={[styles.membernumIcon, { marginLeft: 140, position: 'relative', left: 115 }]}>
+                                <Text style={{ color: '#9C8F4A' }}>{date.weekday ? `(${date.weekday}) ${date.startTime} - ${date.endTime}` : "미정"}</Text>
+                                <Text style={[styles.membernumIcon, { marginLeft: 140, position: 'absolute', left: 145 }]}>
                                     {membersCount[content.id]?.currentUserCount} / {membersCount[content.id]?.currentUserCount + membersCount[content.id]?.remainingCount}
                                 </Text>
                             </View>
