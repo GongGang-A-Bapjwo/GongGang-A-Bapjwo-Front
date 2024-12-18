@@ -138,21 +138,29 @@ const Matching = ({ onBack, roomId }) => {
     return (
         <View style={styles.container}>
             <View style={styles.table}>
-                <View style={[styles.row3, { marginTop: 30, height: 30 }]}>
-                    <Text style={styles.title}>시간 잡기</Text>
+                <View style={[styles.row3, { marginTop: 30, height: 30, position: 'relative', top: -15 }]}>
+                    <Text style={styles.title}>
+                        {typeof '시간 잡기' === 'string' ? '시간 잡기' : ''}
+                    </Text>
                 </View>
                 <View style={styles.row3}>
-                    <View style={[styles.promiseboardcontent, { marginTop: 300, height: 300 }]}>
+                    <View style={[styles.promiseboardcontent, { position: 'relative', top: 170, height: (220 + (processedData.length * 20)) }]}>
                         <View style={[styles.row3]}>
-                            <Text style={[styles.match, { marginTop: 30, marginLeft: 10 }]}>이 공강팟의</Text>
+                            <Text style={[styles.match, { marginTop: 30, marginLeft: 10 }]}>
+                                {typeof '이 공강팟의' === 'string' ? '이 공강팟의' : ''}
+                            </Text>
                         </View>
                         <View style={[styles.row3, { marginTop: 10 }]}>
-                            <Text style={[styles.match, { height: 30, marginLeft: 10 }]}>시간대를 아래에서 선택해주세요</Text>
+                            <Text style={[styles.match, { height: 30, marginLeft: 10 }]}>
+                                {typeof '시간대를 아래에서 선택해주세요' === 'string' ? '시간대를 아래에서 선택해주세요' : ''}
+                            </Text>
                         </View>
                         {processedData.length === 0 ?
                             <View style={{ marginTop: 20 }}>
                                 <Image source={require('../assets/images/box.png')} style={{ width: 80, height: 80, marginLeft: 140 }} />
-                                <Text style={{ marginTop: 20, fontSize: 15, width: 330, textAlign: 'center', marginLeft: 12 }}>가능한 시간이 없어요</Text>
+                                <Text style={{ marginTop: 20, fontSize: 15, width: 330, textAlign: 'center', marginLeft: 12 }}>
+                                    {typeof '가능한 시간이 없어요' === 'string' ? '가능한 시간이 없어요' : ''}
+                                </Text>
                             </View>
                             :
                             <View style={{ marginTop: 20, width: '100%' }}>
@@ -170,17 +178,17 @@ const Matching = ({ onBack, roomId }) => {
                 </View>
                 {processedData.length === 0 ?
                     <TouchableOpacity onPress={() => onBack()}>
-                        <View style={[styles.row3, { marginTop: 300, backgroundColor: '#D8D3B9', width: 120, height: 35, justifyContent: 'center' }]}>
+                        <View style={[styles.row3, { position: 'relative', top: 390, marginTop: 300, backgroundColor: '#D8D3B9', width: 120, height: 35, justifyContent: 'center' }]}>
                             <Text style={{ fontSize: 18 }}>돌아가기</Text>
                         </View>
                     </TouchableOpacity>
                     : <TouchableOpacity onPress={() => handleSubmit()}>
-                        <View style={[styles.row3, { marginTop: 320, backgroundColor: '#D8D3B9', width: 120, height: 35, justifyContent: 'center' }]}>
+                        <View style={[styles.row3, { position: 'relative', top: 390, backgroundColor: '#D8D3B9', width: 120, height: 35, justifyContent: 'center' }]}>
                             <Text style={{ fontSize: 18 }}>선택하기</Text>
                         </View>
                     </TouchableOpacity>}
             </View>
-        </View >
+        </View>
     )
 }
 

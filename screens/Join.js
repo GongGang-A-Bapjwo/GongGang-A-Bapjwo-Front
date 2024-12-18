@@ -13,7 +13,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [isToastVisible, setIsToastVisible] = useState(false);
     const [realroomId, setRealroomId] = useState(0);
-    const [date, setDate] = useState({ weekday: '', startTime: '', endTime: '' });
+    const [date, setDate] = useState([]);
 
     const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiZXhwIjoxNzM1MDMyNzQ5LCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.31c9kDajutIKXfs9JDS7AKpVSkZu0Yo6S9tUL5ibkgvFu2mzYpGvizD094Yyuqdw";
     // const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MTQsImV4cCI6MTczNTAyMTU0Mywicm9sZSI6IlJPTEVfTUVNQkVSIn0.6zBS-LJLspGeeI02asfO9tDrv_fN65EMSvOtofTL3trRm2u5MjH-AT2Ok5Vhtob4";
@@ -79,53 +79,40 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                 setLoading(true);
 
                 const response = await axios.get(url1, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
 
                 const appointments = response.data;
                 console.log('Appointments:', appointments);
 
+                const newDates = []; // 날짜를 저장할 배열
+
                 const membersPromises = appointments.map(async (appt) => {
                     const roomId = appt.id;
-                    console.log('Fetching members for roomId:', roomId);
-                    console.log("Type of roomId:", typeof roomId);
-                    var weekday = appt.decidedWeekday; // 요일                         
-                    var startTime = appt.decidedStartTime;
-                    var endTime = appt.decidedEndTime;
 
-                    let koreanWeekday = null;
+                    // 날짜 변환 로직
+                    let weekday = appt.decidedWeekday;
+                    let startTime = appt.decidedStartTime;
+                    let endTime = appt.decidedEndTime;
 
-                    // 시간 변환
-                    if (appt.decidedStartTime != null) {
-                        startmapping = convertTo12HourFormat(appt.decidedStartTime);
-                    }
+                    let koreanWeekday = '미정';
+                    if (weekday) koreanWeekday = weekdayMapping[weekday];
+                    if (startTime) startTime = convertTo12HourFormat(startTime);
+                    if (endTime) endTime = convertTo12HourFormat(endTime);
 
-                    if (appt.decidedEndTime != null) {
-                        endmapping = convertTo12HourFormat(appt.decidedEndTime);
-                    }
+                    const dateInfo = {
+                        weekday: koreanWeekday,
+                        startTime: startTime || '미정',
+                        endTime: endTime || '미정',
+                    };
 
-                    // 날짜 상태 설정
-                    if (koreanWeekday && startmapping && endmapping) {
-                        setDate({
-                            weekday: koreanWeekday,
-                            startTime: startmapping,
-                            endTime: endmapping,
-                        });
-                        console.log('Date:', {
-                            weekday: koreanWeekday,
-                            startTime: startmapping,
-                            endTime: endmapping,
-                        });
-                    }
-
+                    // 배열에 추가
+                    newDates.push(dateInfo);
+                    console.log('Date:', dateInfo);
 
                     try {
                         const membersResponse = await axios.get(`${url2Base}${roomId}`, {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
+                            headers: { Authorization: `Bearer ${token}` },
                         });
                         return { roomId, count: membersResponse.data };
                     } catch (err) {
@@ -135,6 +122,9 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                 });
 
                 const membersData = await Promise.all(membersPromises);
+
+                // 상태에 최종 날짜 업데이트
+                setDate(newDates);
 
                 const membersCountMap = {};
                 membersData.forEach(({ roomId, count }) => {
@@ -266,9 +256,9 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                     group.map((content, index) => (
                         <View key={index} style={[styles.promiseboardcontent, { height: 100, marginTop: 10 }]}>
                             <View style={[styles.row3, { marginBottom: 5, marginLeft: 16 }]}>
-                                <Text>{categoryMapping[content.category] || '전체'}</Text>
+                                <Text>{content.category || '전체'}</Text>
                                 {content.isOwner && (
-                                    <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30, position: 'absolute', left: 115, top: -30 }]}>
+                                    <View style={[styles.circleIcon, { marginLeft: 118, marginTop: 30, position: 'relative', left: 70 }]}>
                                         <TouchableOpacity onPress={() => onSelectManage(content.id)}>
                                             <Image
                                                 source={require('../assets/images/manager.png')}
@@ -277,7 +267,7 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                                         </TouchableOpacity>
                                     </View>
                                 )}
-                                <View style={[styles.circleIcon, { marginLeft: 8, marginTop: 30, position: 'absolute', left: 278, top: -30 }]}>
+                                <View style={[styles.circleIcon, { marginLeft: 8, marginTop: 30, position: 'relative', left: 70 }]}>
                                     <TouchableOpacity onPress={() => ExitToast(content.id)}>
                                         <Image
                                             source={require('../assets/images/exit.png')}
@@ -287,11 +277,15 @@ const Join = ({ onSelectManage, onSelectMakeParty }) => {
                                 </View>
                             </View>
                             <View style={[styles.row3, { marginLeft: 16, marginBottom: 3 }]}>
-                                <Text style={{ fontSize: 16, fontWeight: 'bold', position: 'relative', top: -3, left: -2 }}>{content.title || '제목 없음'}</Text>
+                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{content.title || '제목 없음'}</Text>
                             </View>
                             <View style={[styles.row3, { marginLeft: 16 }]}>
-                                <Text style={{ color: '#9C8F4A' }}>{date.weekday ? `(${date.weekday}) ${date.startTime} - ${date.endTime}` : "미정"}</Text>
-                                <Text style={[styles.membernumIcon, { marginLeft: 140, position: 'absolute', left: 145 }]}>
+                                <Text style={{ color: '#9C8F4A' }}> {date[index]
+                                    ? (date[index].weekday === "미정"
+                                        ? "미정"
+                                        : `(${date[index].weekday}) ${date[index].startTime} - ${date[index].endTime}`)
+                                    : "로딩 중..."}</Text>
+                                <Text style={[styles.membernumIcon, { marginLeft: 140, position: 'relative', left: 115 }]}>
                                     {membersCount[content.id]?.currentUserCount} / {membersCount[content.id]?.currentUserCount + membersCount[content.id]?.remainingCount}
                                 </Text>
                             </View>

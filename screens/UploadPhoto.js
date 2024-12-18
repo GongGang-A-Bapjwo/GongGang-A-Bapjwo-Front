@@ -13,6 +13,7 @@ const UploadPhoto = () => {
     const [file, setFile] = useState(null);
 
     const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiZXhwIjoxNzM1MDMyNzQ5LCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.31c9kDajutIKXfs9JDS7AKpVSkZu0Yo6S9tUL5ibkgvFu2mzYpGvizD094Yyuqdw";
+    // const token = "eyJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MywiZXhwIjoxNzM1MDYxNjk5LCJyb2xlIjoiUk9MRV9NRU1CRVIifQ.ra6rg-1BnvNGkW5OKUdYzLQCmyGgDAhF0JiIaVhh1aYfYblj_uvD9U4Vft7uPiuO";
 
     const pickImage = async () => {
         try {
